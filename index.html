@@ -231,11 +231,11 @@
         </header>
 
         <div class="chart-section">
-            <h2>Total Market Values by Category (Stacked Bar Chart)</h2>
+            <h2>Share of Total Wealth by Category (1970-2024)</h2>
             <p class="chart-description">
-                Each bar shows the total dollar value sitting in or flowing through each category for that year.
-                Asset markets (stocks, bonds, housing) show total market capitalization/value.
-                Consumer categories show annual spending. M2 shows total money supply.
+                Each bar shows what percent of total wealth each category represents.
+                Stocks have grown from ~20% to ~30% of total wealth. Consumer spending (CPI components) have shrunk from ~15% to ~10%.
+                This shows why CPI understates "true" inflation — it measures shrinking categories.
             </p>
             <div class="chart-container">
                 <canvas id="totalMarketsChart"></canvas>
@@ -246,7 +246,8 @@
                 <p><strong>Asset Markets (Stock Values):</strong> Stocks, Bonds, Housing, Private Companies - these are TOTAL market values (the entire stock of wealth sitting in these assets).</p>
                 <p><strong>Consumer Spending (Flow Values):</strong> Food, Services, Energy, Automotive - these are ANNUAL spending (how much flows through these categories each year).</p>
                 <p><strong>M2 Money Supply:</strong> Total dollars in circulation (cash + checking + savings + money market funds).</p>
-                <p><strong>Key Insight:</strong> Notice how asset market values have grown far faster than consumer spending categories, and how all categories have grown faster than M2 money supply would suggest if money were evenly distributed.</p>
+                <p><strong>M0 Monetary Base:</strong> Currency + bank reserves at the Fed. Much smaller than M2 but grew faster — shows Fed's balance sheet expansion through QE.</p>
+                <p><strong>Key Insight:</strong> Notice how asset market values have grown far faster than consumer spending categories. M0 exploded after 2008 and 2020 QE — these reserves prop up bond prices, pushing investors into stocks and driving asset inflation.</p>
             </div>
         </div>
 
@@ -272,6 +273,7 @@
                                 <th>Auto</th>
                                 <th>Other Goods</th>
                                 <th>M2 Supply</th>
+                                <th>M0 Base</th>
                                 <th>TOTAL</th>
                             </tr>
                         </thead>
@@ -316,9 +318,10 @@
             <div class="legend-note">
                 <h3>Methodology</h3>
                 <p><strong>Official CPI (Green):</strong> Bureau of Labor Statistics consumer price index — only measures consumer goods/services, excludes asset prices. Cumulative since 1970.</p>
-                <p><strong>Total Assets (Red):</strong> Cumulative growth of all asset values (stocks + bonds + housing + private companies). Calculated directly from market values, not averaged annual rates.</p>
-                <p><strong>M2 Money Supply (Yellow):</strong> Cumulative growth of M2 money supply.</p>
-                <p><strong>Key Finding:</strong> Assets grew ~78x while CPI says prices only grew ~8x. The difference is where inflation "hides" — in asset prices that CPI doesn't measure.</p>
+                <p><strong>M2 Money Supply (Yellow):</strong> Cumulative growth of M2 money supply (cash + checking + savings + money markets).</p>
+                <p><strong>M0 Monetary Base (Salmon):</strong> Currency in circulation + bank reserves at the Fed. Exploded after 2008 QE and 2020 COVID response. ~72x growth since 1970.</p>
+                <p><strong>Total Assets (Red):</strong> Cumulative growth of all asset values (stocks + bonds + housing + private companies). Calculated directly from market values.</p>
+                <p><strong>Key Finding:</strong> Assets grew ~78x while CPI says prices only grew ~8x. M0 grew ~72x — the Fed created reserves that propped up bond markets, pushing investors into stocks and driving asset prices higher.</p>
             </div>
         </div>
 
@@ -336,9 +339,10 @@
                                 <th>Year</th>
                                 <th>CPI Index (Multiplier)</th>
                                 <th>M2 Index (Multiplier)</th>
+                                <th>M0 Index (Multiplier)</th>
                                 <th>Assets Index (Multiplier)</th>
                                 <th>Assets vs CPI</th>
-                                <th>Assets vs M2</th>
+                                <th>Assets vs M0</th>
                             </tr>
                         </thead>
                         <tbody id="inflationTableBody">
@@ -351,7 +355,7 @@
         <!-- Summary Stats -->
         <div class="chart-section">
             <h2>Summary: 1970-2024</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
                 <div style="background: rgba(76, 175, 80, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
                     <div style="font-size: 0.9rem; color: #4CAF50; margin-bottom: 5px;">Official CPI (1970-2024)</div>
                     <div style="font-size: 2rem; font-weight: bold; color: #4CAF50;">~700%</div>
@@ -361,6 +365,11 @@
                     <div style="font-size: 0.9rem; color: #FFD700; margin-bottom: 5px;">M2 Money Supply Growth</div>
                     <div style="font-size: 2rem; font-weight: bold; color: #FFD700;">~3,450%</div>
                     <div style="font-size: 0.85rem; color: #888;">~35x | ~6.8%/year</div>
+                </div>
+                <div style="background: rgba(255, 100, 100, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #ff6464; margin-bottom: 5px;">M0 Monetary Base Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #ff6464;">~7,150%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~72x | ~8.3%/year</div>
                 </div>
                 <div style="background: rgba(233, 69, 96, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
                     <div style="font-size: 0.9rem; color: #e94560; margin-bottom: 5px;">Total Asset Values Growth</div>
@@ -375,7 +384,8 @@
             </div>
             <p style="margin-top: 20px; color: #a8a8a8; font-size: 0.9rem;">
                 <strong>The key insight:</strong> M2 money supply grew ~35x since 1970. Official CPI says prices went up ~8x.
-                But total asset values grew ~78x. The "true" cost of buying a proportional share of everything grew ~73x, not ~8x.
+                But M0 (monetary base) grew ~72x — nearly matching asset growth of ~78x. The Fed's QE programs created bank reserves
+                that propped up bond markets, pushing investors into equities and driving asset inflation.
                 CPI only measures consumer goods (~$21T/year), ignoring assets (~$187T in value) where most wealth sits.
             </p>
         </div>
@@ -569,6 +579,18 @@
                 4.90, 5.40, 5.80, 6.10, 6.40, 6.70, 7.10, 7.50, 8.20, 8.50,  // 2000-2009
                 8.80, 9.60, 10.40, 10.90, 11.70, 12.30, 13.20, 13.90, 14.40, 15.30, // 2010-2019
                 19.40, 21.00, 21.50, 20.80, 21.30  // 2020-2024
+            ],
+
+            // M0 MONETARY BASE (Currency + Bank Reserves at Fed)
+            // Source: Federal Reserve FRED - BOGMBASE
+            // Note: Exploded after 2008 QE and 2020 COVID response
+            m0: [
+                0.08, 0.09, 0.09, 0.10, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15,  // 1970-1979
+                0.16, 0.17, 0.18, 0.19, 0.21, 0.23, 0.25, 0.27, 0.28, 0.29,  // 1980-1989
+                0.31, 0.33, 0.35, 0.37, 0.40, 0.43, 0.46, 0.50, 0.53, 0.58,  // 1990-1999
+                0.62, 0.65, 0.70, 0.73, 0.77, 0.80, 0.83, 0.85, 1.70, 2.00,  // 2000-2009 (QE1 2008)
+                2.00, 2.60, 2.65, 3.15, 4.00, 3.80, 3.60, 3.85, 3.35, 3.40,  // 2010-2019
+                5.20, 6.40, 5.90, 5.60, 5.80  // 2020-2024 (COVID QE)
             ]
         };
 
@@ -593,10 +615,41 @@
             energy: '#e94560',
             automotive: '#ff69b4',
             otherGoods: '#32CD32',
-            m2: 'rgba(255, 255, 255, 0.3)'
+            m2: 'rgba(255, 255, 255, 0.3)',
+            m0: 'rgba(255, 100, 100, 0.5)'
         };
 
-        // Create the stacked bar chart
+        // Calculate percentages of total for each category each year
+        function calculatePercentages() {
+            const pct = {
+                stocks: [], bonds: [], housing: [], privateCompanies: [],
+                food: [], services: [], energy: [], automotive: [], otherGoods: [],
+                m2: [], m0: []
+            };
+
+            for (let i = 0; i < years.length; i++) {
+                const total = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i] +
+                              data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i] +
+                              data.m2[i] + data.m0[i];
+
+                pct.stocks.push((data.stocks[i] / total) * 100);
+                pct.bonds.push((data.bonds[i] / total) * 100);
+                pct.housing.push((data.housing[i] / total) * 100);
+                pct.privateCompanies.push((data.privateCompanies[i] / total) * 100);
+                pct.food.push((data.food[i] / total) * 100);
+                pct.services.push((data.services[i] / total) * 100);
+                pct.energy.push((data.energy[i] / total) * 100);
+                pct.automotive.push((data.automotive[i] / total) * 100);
+                pct.otherGoods.push((data.otherGoods[i] / total) * 100);
+                pct.m2.push((data.m2[i] / total) * 100);
+                pct.m0.push((data.m0[i] / total) * 100);
+            }
+            return pct;
+        }
+
+        const pctData = calculatePercentages();
+
+        // Create the stacked bar chart (percentages)
         const ctx = document.getElementById('totalMarketsChart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
@@ -605,63 +658,71 @@
                 datasets: [
                     {
                         label: 'Stocks (Market Cap)',
-                        data: data.stocks,
+                        data: pctData.stocks,
                         backgroundColor: colors.stocks,
                         stack: 'total'
                     },
                     {
                         label: 'Bonds (Market Size)',
-                        data: data.bonds,
+                        data: pctData.bonds,
                         backgroundColor: colors.bonds,
                         stack: 'total'
                     },
                     {
                         label: 'Housing (Total Value)',
-                        data: data.housing,
+                        data: pctData.housing,
                         backgroundColor: colors.housing,
                         stack: 'total'
                     },
                     {
                         label: 'Private Companies (Est.)',
-                        data: data.privateCompanies,
+                        data: pctData.privateCompanies,
                         backgroundColor: colors.privateCompanies,
                         stack: 'total'
                     },
                     {
                         label: 'Food (Annual)',
-                        data: data.food,
+                        data: pctData.food,
                         backgroundColor: colors.food,
                         stack: 'total'
                     },
                     {
                         label: 'Services (Annual)',
-                        data: data.services,
+                        data: pctData.services,
                         backgroundColor: colors.services,
                         stack: 'total'
                     },
                     {
                         label: 'Energy (Annual)',
-                        data: data.energy,
+                        data: pctData.energy,
                         backgroundColor: colors.energy,
                         stack: 'total'
                     },
                     {
                         label: 'Automotive (Annual)',
-                        data: data.automotive,
+                        data: pctData.automotive,
                         backgroundColor: colors.automotive,
                         stack: 'total'
                     },
                     {
                         label: 'Other Goods (Annual)',
-                        data: data.otherGoods,
+                        data: pctData.otherGoods,
                         backgroundColor: colors.otherGoods,
                         stack: 'total'
                     },
                     {
                         label: 'M2 Money Supply',
-                        data: data.m2,
+                        data: pctData.m2,
                         backgroundColor: colors.m2,
                         borderColor: '#fff',
+                        borderWidth: 2,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'M0 Monetary Base',
+                        data: pctData.m0,
+                        backgroundColor: colors.m0,
+                        borderColor: '#ff6464',
                         borderWidth: 2,
                         stack: 'total'
                     }
@@ -682,7 +743,23 @@
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                return context.dataset.label + ': $' + context.raw.toFixed(2) + 'T';
+                                const i = context.dataIndex;
+                                const category = context.dataset.label;
+                                const pct = context.raw.toFixed(1);
+                                // Get actual dollar value from original data
+                                let dollarVal;
+                                if (category.includes('Stocks')) dollarVal = data.stocks[i];
+                                else if (category.includes('Bonds')) dollarVal = data.bonds[i];
+                                else if (category.includes('Housing')) dollarVal = data.housing[i];
+                                else if (category.includes('Private')) dollarVal = data.privateCompanies[i];
+                                else if (category.includes('Food')) dollarVal = data.food[i];
+                                else if (category.includes('Services')) dollarVal = data.services[i];
+                                else if (category.includes('Energy')) dollarVal = data.energy[i];
+                                else if (category.includes('Auto')) dollarVal = data.automotive[i];
+                                else if (category.includes('Other')) dollarVal = data.otherGoods[i];
+                                else if (category.includes('M2')) dollarVal = data.m2[i];
+                                else if (category.includes('M0')) dollarVal = data.m0[i];
+                                return category + ': ' + pct + '% ($' + dollarVal.toFixed(2) + 'T)';
                             }
                         }
                     }
@@ -695,14 +772,15 @@
                     },
                     y: {
                         stacked: true,
+                        max: 100,
                         grid: { color: 'rgba(255,255,255,0.1)' },
                         ticks: {
                             color: '#a8a8a8',
-                            callback: function(value) { return '$' + value + 'T'; }
+                            callback: function(value) { return value + '%'; }
                         },
                         title: {
                             display: true,
-                            text: 'Trillions USD',
+                            text: 'Percent of Total',
                             color: '#a8a8a8'
                         }
                     }
@@ -731,6 +809,7 @@
                 <td>$${data.automotive[i].toFixed(2)}</td>
                 <td>$${data.otherGoods[i].toFixed(2)}</td>
                 <td>$${data.m2[i].toFixed(2)}</td>
+                <td>$${data.m0[i].toFixed(2)}</td>
                 <td class="highlight">$${total.toFixed(2)}</td>
             `;
             tableBody.appendChild(row);
@@ -764,6 +843,7 @@
             const baseAssets = data.stocks[0] + data.bonds[0] + data.housing[0] + data.privateCompanies[0];
             const baseConsumer = data.food[0] + data.services[0] + data.energy[0] + data.automotive[0] + data.otherGoods[0];
             const baseM2 = data.m2[0];
+            const baseM0 = data.m0[0];
 
             // Calculate cumulative CPI (compound from annual rates)
             const cumulativeCPI = [100];
@@ -791,6 +871,12 @@
                 cumulativeM2.push((data.m2[i] / baseM2) * 100);
             }
 
+            // Calculate cumulative M0 growth (directly from values)
+            const cumulativeM0 = [];
+            for (let i = 0; i < years.length; i++) {
+                cumulativeM0.push((data.m0[i] / baseM0) * 100);
+            }
+
             // Calculate blended "true inflation" - weighted by relative size each year
             // Weight assets and consumer spending by their dollar values
             const cumulativeBlended = [];
@@ -807,10 +893,10 @@
                 cumulativeBlended.push(blendedIndex);
             }
 
-            return { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeBlended };
+            return { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeBlended };
         }
 
-        const { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeBlended } = calculateCumulativeGrowth();
+        const { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeBlended } = calculateCumulativeGrowth();
 
         // Create cumulative growth chart (line chart for clarity)
         const inflationCtx = document.getElementById('inflationChart').getContext('2d');
@@ -833,6 +919,15 @@
                         data: cumulativeM2,
                         borderColor: '#FFD700',
                         backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'M0 Monetary Base',
+                        data: cumulativeM0,
+                        borderColor: '#ff6464',
+                        backgroundColor: 'rgba(255, 100, 100, 0.1)',
                         borderWidth: 3,
                         fill: false,
                         tension: 0.1
@@ -907,15 +1002,17 @@
                 const row = document.createElement('tr');
                 const cpiVal = cumulativeCPI[i];
                 const m2Val = cumulativeM2[i];
+                const m0Val = cumulativeM0[i];
                 const assetVal = cumulativeAssets[i];
 
                 row.innerHTML = `
                     <td>${year}</td>
                     <td style="color: #4CAF50;">${cpiVal.toFixed(0)} (${(cpiVal/100).toFixed(1)}x)</td>
                     <td style="color: #FFD700;">${m2Val.toFixed(0)} (${(m2Val/100).toFixed(1)}x)</td>
+                    <td style="color: #ff6464;">${m0Val.toFixed(0)} (${(m0Val/100).toFixed(1)}x)</td>
                     <td style="color: #e94560;">${assetVal.toFixed(0)} (${(assetVal/100).toFixed(1)}x)</td>
                     <td>${(assetVal / cpiVal).toFixed(1)}x</td>
-                    <td>${(assetVal / m2Val).toFixed(1)}x</td>
+                    <td>${(assetVal / m0Val).toFixed(1)}x</td>
                 `;
                 inflationTableBody.appendChild(row);
             }
@@ -926,14 +1023,16 @@
         summaryRow.classList.add('totals-row');
         const finalCPI = cumulativeCPI[cumulativeCPI.length - 1];
         const finalM2 = cumulativeM2[cumulativeM2.length - 1];
+        const finalM0 = cumulativeM0[cumulativeM0.length - 1];
         const finalAssets = cumulativeAssets[cumulativeAssets.length - 1];
         summaryRow.innerHTML = `
             <td><strong>1970-2024 Total</strong></td>
             <td style="color: #4CAF50;"><strong>${(finalCPI - 100).toFixed(0)}% (${(finalCPI/100).toFixed(0)}x)</strong></td>
             <td style="color: #FFD700;"><strong>${(finalM2 - 100).toFixed(0)}% (${(finalM2/100).toFixed(0)}x)</strong></td>
+            <td style="color: #ff6464;"><strong>${(finalM0 - 100).toFixed(0)}% (${(finalM0/100).toFixed(0)}x)</strong></td>
             <td style="color: #e94560;"><strong>${(finalAssets - 100).toFixed(0)}% (${(finalAssets/100).toFixed(0)}x)</strong></td>
             <td><strong>${(finalAssets / finalCPI).toFixed(1)}x more</strong></td>
-            <td><strong>${(finalAssets / finalM2).toFixed(1)}x more</strong></td>
+            <td><strong>${(finalAssets / finalM0).toFixed(1)}x more</strong></td>
         `;
         inflationTableBody.appendChild(summaryRow);
 
