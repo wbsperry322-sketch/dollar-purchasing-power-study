@@ -230,27 +230,6 @@
             </p>
         </header>
 
-        <div class="chart-section">
-            <h2>Share of Total Wealth by Category (1970-2024)</h2>
-            <p class="chart-description">
-                Each bar shows what percent of total wealth each category represents.
-                Stocks have grown from ~20% to ~30% of total wealth. Consumer spending (CPI components) have shrunk from ~15% to ~10%.
-                This shows why CPI understates "true" inflation — it measures shrinking categories.
-            </p>
-            <div class="chart-container">
-                <canvas id="totalMarketsChart"></canvas>
-            </div>
-
-            <div class="legend-note">
-                <h3>Reading This Chart</h3>
-                <p><strong>Asset Markets (Stock Values):</strong> Stocks, Bonds, Housing, Private Companies - these are TOTAL market values (the entire stock of wealth sitting in these assets).</p>
-                <p><strong>Consumer Spending (Flow Values):</strong> Food, Services, Energy, Automotive - these are ANNUAL spending (how much flows through these categories each year).</p>
-                <p><strong>M2 Money Supply:</strong> Total dollars in circulation (cash + checking + savings + money market funds).</p>
-                <p><strong>M0 Monetary Base:</strong> Currency + bank reserves at the Fed. Much smaller than M2 but grew faster — shows Fed's balance sheet expansion through QE.</p>
-                <p><strong>Key Insight:</strong> Notice how asset market values have grown far faster than consumer spending categories. M0 exploded after 2008 and 2020 QE — these reserves prop up bond prices, pushing investors into stocks and driving asset inflation.</p>
-            </div>
-        </div>
-
         <!-- Data Table (Collapsible) -->
         <div class="chart-section">
             <div class="collapsible-header" onclick="toggleCollapsible(this)">
@@ -349,6 +328,25 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <!-- Asset Growth: Expected vs Actual -->
+        <div class="chart-section">
+            <h2>The Gap: Expected vs Actual Asset Growth (1970-2024)</h2>
+            <p class="chart-description">
+                If asset values had tracked GDP (the economy), they would have grown ~27x. Instead they grew ~78x.
+                The ~2.9x gap represents pure financialization — P/E expansion, Fed policy, and asset inflation beyond economic fundamentals.
+            </p>
+            <div class="chart-container" style="height: 350px;">
+                <canvas id="attributionChart"></canvas>
+            </div>
+            <div class="legend-note">
+                <h3>The Story</h3>
+                <p><strong>Expected (GDP-based):</strong> If $1 of assets in 1970 grew with the economy, it would be worth ~$27 today. This includes both real growth (~4.6x) and inflation (~8x).</p>
+                <p><strong>Actual:</strong> $1 of assets in 1970 is actually worth ~$78 today.</p>
+                <p><strong>The Gap (~2.9x):</strong> Assets are worth ~2.9x more than the economy justifies. This "excess" represents multiple expansion (P/E ratios tripling), financialization, and Fed-enabled asset inflation.</p>
+                <p style="margin-top: 15px; color: #e94560;"><strong>Key insight:</strong> The economy grew 27x. Assets grew 78x. That ~$120T+ gap (in today's dollars) is wealth that exists beyond economic fundamentals — and it's concentrated in the hands of those who owned assets in 1970.</p>
             </div>
         </div>
 
@@ -452,12 +450,112 @@
             </div>
         </div>
 
+        <!-- Asset Composition by Wealth Group -->
+        <div class="chart-section">
+            <h2>Portfolio Composition: What Each Wealth Group Owns (2022)</h2>
+            <p class="chart-description">
+                The poor hold cash. The rich hold stocks. This single fact explains why wealth inequality compounds over time.
+                Data from Federal Reserve Survey of Consumer Finances (2022).
+            </p>
+            <div class="chart-container" style="height: 400px;">
+                <canvas id="assetCompositionChart"></canvas>
+            </div>
+            <div class="legend-note">
+                <h3>Why This Matters</h3>
+                <p><strong>Bottom 50%:</strong> Hold ~35% in cash/savings (0% real return) and heavily rely on vehicles (depreciating assets). Only ~5% in stocks. Their portfolio is structurally designed to lose purchasing power.</p>
+                <p><strong>Middle 40% (50th-90th):</strong> Real estate heavy (~70-100% of net worth in home equity). Some stock exposure through 401k. Still too much cash (~10-15%).</p>
+                <p><strong>Top 10% (90th-99th):</strong> More diversified. ~31% stocks, ~59% real estate, only ~6% cash. They benefit from asset inflation but are still wage-dependent.</p>
+                <p><strong>Top 1%:</strong> ~31% stocks + ~41% private business equity = 72% in high-growth assets. Only ~2% cash. They OWN the things that grow at 8%+ annually.</p>
+                <p style="margin-top: 15px; color: #e94560;"><strong>The structural trap:</strong> The bottom 50% hold the worst-performing asset class (cash) while the top 1% hold almost none. This isn't about financial literacy - it's about having enough money to invest. You can't buy stocks if you need every dollar for rent.</p>
+            </div>
+
+            <!-- Asset Composition Table -->
+            <div style="margin-top: 20px;">
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Wealth Group</th>
+                                <th>Net Worth Range</th>
+                                <th style="color: #e94560;">Cash/Savings</th>
+                                <th style="color: #4da6ff;">Stocks</th>
+                                <th style="color: #4CAF50;">Real Estate</th>
+                                <th style="color: #9b59b6;">Business Equity</th>
+                                <th style="color: #ff8c00;">Vehicles</th>
+                                <th>Portfolio Return*</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bottom 25%</td>
+                                <td>&lt;$12k</td>
+                                <td style="color: #e94560;">~35%</td>
+                                <td style="color: #4da6ff;">~5%</td>
+                                <td style="color: #4CAF50;">~20%</td>
+                                <td style="color: #9b59b6;">~2%</td>
+                                <td style="color: #ff8c00;">~38%</td>
+                                <td style="color: #888;">~1-2%/yr</td>
+                            </tr>
+                            <tr>
+                                <td>25th-50th %ile</td>
+                                <td>$12k-$165k</td>
+                                <td style="color: #e94560;">~15%</td>
+                                <td style="color: #4da6ff;">~13%</td>
+                                <td style="color: #4CAF50;">~155%**</td>
+                                <td style="color: #9b59b6;">~2%</td>
+                                <td style="color: #ff8c00;">~29%</td>
+                                <td style="color: #888;">~3-4%/yr</td>
+                            </tr>
+                            <tr>
+                                <td>50th-75th %ile</td>
+                                <td>$165k-$500k</td>
+                                <td style="color: #e94560;">~8%</td>
+                                <td style="color: #4da6ff;">~16%</td>
+                                <td style="color: #4CAF50;">~100%**</td>
+                                <td style="color: #9b59b6;">~3%</td>
+                                <td style="color: #ff8c00;">~9%</td>
+                                <td style="color: #888;">~4-5%/yr</td>
+                            </tr>
+                            <tr>
+                                <td>75th-99th %ile</td>
+                                <td>$500k-$11M</td>
+                                <td style="color: #e94560;">~6%</td>
+                                <td style="color: #4da6ff;">~31%</td>
+                                <td style="color: #4CAF50;">~59%</td>
+                                <td style="color: #9b59b6;">~9%</td>
+                                <td style="color: #ff8c00;">~4%</td>
+                                <td style="color: #4CAF50;">~6-7%/yr</td>
+                            </tr>
+                            <tr style="background: rgba(77, 166, 255, 0.1);">
+                                <td><strong>Top 1%</strong></td>
+                                <td>&gt;$11M</td>
+                                <td style="color: #e94560;"><strong>~2%</strong></td>
+                                <td style="color: #4da6ff;"><strong>~31%</strong></td>
+                                <td style="color: #4CAF50;"><strong>~23%</strong></td>
+                                <td style="color: #9b59b6;"><strong>~41%</strong></td>
+                                <td style="color: #ff8c00;"><strong>~1%</strong></td>
+                                <td style="color: #4da6ff;"><strong>~8-10%/yr</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">
+                        *Estimated blended portfolio returns based on historical asset class performance.
+                        **Real estate exceeds 100% of net worth when households have mortgage debt (gross assets minus liabilities).
+                        Source: Federal Reserve Survey of Consumer Finances 2022, Richmond Fed analysis.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>Data compiled from Federal Reserve, BLS, BEA, EIA, and financial industry sources. January 2025.</p>
         </footer>
     </div>
 
     <script>
+        // Debug: Check if Chart.js loaded
+        console.log('Script started, Chart.js loaded:', typeof Chart !== 'undefined');
+
         // Toggle function for collapsible tables
         function toggleCollapsible(header) {
             header.classList.toggle('expanded');
@@ -591,6 +689,18 @@
                 0.62, 0.65, 0.70, 0.73, 0.77, 0.80, 0.83, 0.85, 1.70, 2.00,  // 2000-2009 (QE1 2008)
                 2.00, 2.60, 2.65, 3.15, 4.00, 3.80, 3.60, 3.85, 3.35, 3.40,  // 2010-2019
                 5.20, 6.40, 5.90, 5.60, 5.80  // 2020-2024 (COVID QE)
+            ],
+
+            // NOMINAL GDP (Trillions USD)
+            // Source: BEA / FRED - GDPA
+            // 1970: $1.07T → 2024: ~$29T (~27x growth)
+            gdp: [
+                1.07, 1.17, 1.28, 1.43, 1.55, 1.69, 1.88, 2.09, 2.36, 2.63,  // 1970-1979
+                2.86, 3.13, 3.26, 3.54, 3.93, 4.23, 4.46, 4.74, 5.10, 5.48,  // 1980-1989
+                5.80, 5.99, 6.34, 6.66, 7.09, 7.41, 7.84, 8.33, 8.79, 9.35,  // 1990-1999
+                9.95, 10.29, 10.64, 11.09, 11.82, 12.57, 13.32, 13.97, 14.47, 14.42,  // 2000-2009
+                14.99, 15.54, 16.20, 16.78, 17.52, 18.22, 18.71, 19.52, 20.53, 21.37,  // 2010-2019
+                21.06, 23.32, 25.46, 27.36, 29.00  // 2020-2024
             ]
         };
 
@@ -618,175 +728,6 @@
             m2: 'rgba(255, 255, 255, 0.3)',
             m0: 'rgba(255, 100, 100, 0.5)'
         };
-
-        // Calculate percentages of total for each category each year
-        function calculatePercentages() {
-            const pct = {
-                stocks: [], bonds: [], housing: [], privateCompanies: [],
-                food: [], services: [], energy: [], automotive: [], otherGoods: [],
-                m2: [], m0: []
-            };
-
-            for (let i = 0; i < years.length; i++) {
-                const total = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i] +
-                              data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i] +
-                              data.m2[i] + data.m0[i];
-
-                pct.stocks.push((data.stocks[i] / total) * 100);
-                pct.bonds.push((data.bonds[i] / total) * 100);
-                pct.housing.push((data.housing[i] / total) * 100);
-                pct.privateCompanies.push((data.privateCompanies[i] / total) * 100);
-                pct.food.push((data.food[i] / total) * 100);
-                pct.services.push((data.services[i] / total) * 100);
-                pct.energy.push((data.energy[i] / total) * 100);
-                pct.automotive.push((data.automotive[i] / total) * 100);
-                pct.otherGoods.push((data.otherGoods[i] / total) * 100);
-                pct.m2.push((data.m2[i] / total) * 100);
-                pct.m0.push((data.m0[i] / total) * 100);
-            }
-            return pct;
-        }
-
-        const pctData = calculatePercentages();
-
-        // Create the stacked bar chart (percentages)
-        const ctx = document.getElementById('totalMarketsChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: years,
-                datasets: [
-                    {
-                        label: 'Stocks (Market Cap)',
-                        data: pctData.stocks,
-                        backgroundColor: colors.stocks,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Bonds (Market Size)',
-                        data: pctData.bonds,
-                        backgroundColor: colors.bonds,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Housing (Total Value)',
-                        data: pctData.housing,
-                        backgroundColor: colors.housing,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Private Companies (Est.)',
-                        data: pctData.privateCompanies,
-                        backgroundColor: colors.privateCompanies,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Food (Annual)',
-                        data: pctData.food,
-                        backgroundColor: colors.food,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Services (Annual)',
-                        data: pctData.services,
-                        backgroundColor: colors.services,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Energy (Annual)',
-                        data: pctData.energy,
-                        backgroundColor: colors.energy,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Automotive (Annual)',
-                        data: pctData.automotive,
-                        backgroundColor: colors.automotive,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'Other Goods (Annual)',
-                        data: pctData.otherGoods,
-                        backgroundColor: colors.otherGoods,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'M2 Money Supply',
-                        data: pctData.m2,
-                        backgroundColor: colors.m2,
-                        borderColor: '#fff',
-                        borderWidth: 2,
-                        stack: 'total'
-                    },
-                    {
-                        label: 'M0 Monetary Base',
-                        data: pctData.m0,
-                        backgroundColor: colors.m0,
-                        borderColor: '#ff6464',
-                        borderWidth: 2,
-                        stack: 'total'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            color: '#e8e8e8',
-                            padding: 15,
-                            font: { size: 11 }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const i = context.dataIndex;
-                                const category = context.dataset.label;
-                                const pct = context.raw.toFixed(1);
-                                // Get actual dollar value from original data
-                                let dollarVal;
-                                if (category.includes('Stocks')) dollarVal = data.stocks[i];
-                                else if (category.includes('Bonds')) dollarVal = data.bonds[i];
-                                else if (category.includes('Housing')) dollarVal = data.housing[i];
-                                else if (category.includes('Private')) dollarVal = data.privateCompanies[i];
-                                else if (category.includes('Food')) dollarVal = data.food[i];
-                                else if (category.includes('Services')) dollarVal = data.services[i];
-                                else if (category.includes('Energy')) dollarVal = data.energy[i];
-                                else if (category.includes('Auto')) dollarVal = data.automotive[i];
-                                else if (category.includes('Other')) dollarVal = data.otherGoods[i];
-                                else if (category.includes('M2')) dollarVal = data.m2[i];
-                                else if (category.includes('M0')) dollarVal = data.m0[i];
-                                return category + ': ' + pct + '% ($' + dollarVal.toFixed(2) + 'T)';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: { color: '#a8a8a8' }
-                    },
-                    y: {
-                        stacked: true,
-                        max: 100,
-                        grid: { color: 'rgba(255,255,255,0.1)' },
-                        ticks: {
-                            color: '#a8a8a8',
-                            callback: function(value) { return value + '%'; }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Percent of Total',
-                            color: '#a8a8a8'
-                        }
-                    }
-                }
-            }
-        });
 
         // Populate the data table
         const tableBody = document.getElementById('tableBody');
@@ -844,6 +785,7 @@
             const baseConsumer = data.food[0] + data.services[0] + data.energy[0] + data.automotive[0] + data.otherGoods[0];
             const baseM2 = data.m2[0];
             const baseM0 = data.m0[0];
+            const baseGDP = data.gdp[0];
 
             // Calculate cumulative CPI (compound from annual rates)
             const cumulativeCPI = [100];
@@ -877,6 +819,12 @@
                 cumulativeM0.push((data.m0[i] / baseM0) * 100);
             }
 
+            // Calculate cumulative GDP growth (directly from values)
+            const cumulativeGDP = [];
+            for (let i = 0; i < years.length; i++) {
+                cumulativeGDP.push((data.gdp[i] / baseGDP) * 100);
+            }
+
             // Calculate blended "true inflation" - weighted by relative size each year
             // Weight assets and consumer spending by their dollar values
             const cumulativeBlended = [];
@@ -893,13 +841,16 @@
                 cumulativeBlended.push(blendedIndex);
             }
 
-            return { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeBlended };
+            return { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeGDP, cumulativeBlended };
         }
 
-        const { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeBlended } = calculateCumulativeGrowth();
+        const { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeM0, cumulativeGDP, cumulativeBlended } = calculateCumulativeGrowth();
+
+        console.log('Cumulative data calculated:', { cumulativeCPI: cumulativeCPI.length, cumulativeAssets: cumulativeAssets.length });
 
         // Create cumulative growth chart (line chart for clarity)
         const inflationCtx = document.getElementById('inflationChart').getContext('2d');
+        console.log('inflationChart canvas found:', !!inflationCtx);
         new Chart(inflationCtx, {
             type: 'line',
             data: {
@@ -928,6 +879,15 @@
                         data: cumulativeM0,
                         borderColor: '#ff6464',
                         backgroundColor: 'rgba(255, 100, 100, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Nominal GDP',
+                        data: cumulativeGDP,
+                        borderColor: '#9b59b6',
+                        backgroundColor: 'rgba(155, 89, 182, 0.1)',
                         borderWidth: 3,
                         fill: false,
                         tension: 0.1
@@ -1035,6 +995,88 @@
             <td><strong>${(finalAssets / finalM0).toFixed(1)}x more</strong></td>
         `;
         inflationTableBody.appendChild(summaryRow);
+
+        // ============================================
+        // EXPECTED VS ACTUAL ASSET GROWTH CHART
+        // ============================================
+
+        const finalGDP = cumulativeGDP[cumulativeGDP.length - 1];
+
+        // Multipliers
+        const gdpMultiple = finalGDP / 100;           // ~27x
+        const assetMultiple = finalAssets / 100;      // ~78x
+        const gapMultiple = assetMultiple / gdpMultiple;  // ~2.9x
+
+        // Calculate in dollar terms (starting with $1 in 1970)
+        // 1970 total assets were ~$2.4T, 2024 ~$187T
+        const assets1970 = data.stocks[0] + data.bonds[0] + data.housing[0] + data.privateCompanies[0];
+        const assets2024Final = data.stocks[54] + data.bonds[54] + data.housing[54] + data.privateCompanies[54];
+        const expectedAssets2024 = assets1970 * gdpMultiple;  // What assets would be if they tracked GDP
+        const excessDollars = assets2024Final - expectedAssets2024;  // The "gap" in trillions
+
+        const attributionCtx = document.getElementById('attributionChart').getContext('2d');
+        new Chart(attributionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Expected\n(If tracked GDP)', 'Actual\nAsset Growth', 'The Gap\n(Excess)'],
+                datasets: [
+                    {
+                        label: 'Growth Multiple (1970 = 1)',
+                        data: [gdpMultiple, assetMultiple, gapMultiple],
+                        backgroundColor: ['#9b59b6', '#e94560', '#ff6464'],
+                        borderColor: ['#9b59b6', '#e94560', '#ff6464'],
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const val = context.raw;
+                                if (context.dataIndex === 0) return `GDP grew ${val.toFixed(0)}x`;
+                                if (context.dataIndex === 1) return `Assets grew ${val.toFixed(0)}x`;
+                                return `Assets are ${val.toFixed(1)}x higher than GDP justifies`;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: `GDP: ${gdpMultiple.toFixed(0)}x → Assets: ${assetMultiple.toFixed(0)}x → Gap: ${gapMultiple.toFixed(1)}x excess`,
+                        color: '#e8e8e8',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: {
+                            color: '#e8e8e8',
+                            font: { size: 12 }
+                        }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: '#a8a8a8',
+                            callback: function(value) { return value + 'x'; }
+                        },
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Growth Multiple (1970 = 1x)',
+                            color: '#a8a8a8'
+                        }
+                    }
+                }
+            }
+        });
 
         // ============================================
         // WEALTH DISTRIBUTION CHART
@@ -1250,6 +1292,105 @@
                     <td style="color: #00bcd4;">${wealthDistribution.government[i].toFixed(1)}%</td>
                 `;
                 wealthTableBody.appendChild(row);
+            }
+        });
+
+        // ============================================
+        // ASSET COMPOSITION BY WEALTH GROUP CHART
+        // Data from Federal Reserve Survey of Consumer Finances 2022
+        // ============================================
+
+        const assetCompCtx = document.getElementById('assetCompositionChart').getContext('2d');
+        new Chart(assetCompCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Bottom 25%', '25th-50th', '50th-75th', '75th-99th', 'Top 1%'],
+                datasets: [
+                    {
+                        label: 'Cash/Savings',
+                        data: [35, 15, 8, 6, 2],
+                        backgroundColor: '#e94560',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Stocks',
+                        data: [5, 13, 16, 31, 31],
+                        backgroundColor: '#4da6ff',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Real Estate',
+                        data: [20, 40, 50, 59, 23],
+                        backgroundColor: '#4CAF50',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Business Equity',
+                        data: [2, 2, 3, 9, 41],
+                        backgroundColor: '#9b59b6',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Vehicles',
+                        data: [38, 29, 9, 4, 1],
+                        backgroundColor: '#ff8c00',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Other/Debt Offset',
+                        data: [0, 1, 14, -9, 2],
+                        backgroundColor: '#888',
+                        stack: 'stack1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#e8e8e8',
+                            padding: 10,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + '%';
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Portfolio Composition by Wealth Percentile (% of Net Worth)',
+                        color: '#e8e8e8',
+                        font: { size: 14 }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#e8e8e8' }
+                    },
+                    y: {
+                        stacked: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: '#a8a8a8',
+                            callback: function(value) { return value + '%'; }
+                        },
+                        title: {
+                            display: true,
+                            text: '% of Net Worth',
+                            color: '#a8a8a8'
+                        }
+                    }
+                }
             }
         });
     </script>
