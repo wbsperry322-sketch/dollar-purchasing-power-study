@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where All The Money Goes: Total US Market Values 1970-2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a8a8a8;
+            max-width: 1000px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .chart-section {
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chart-section h2 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .chart-description {
+            color: #a8a8a8;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 700px;
+            width: 100%;
+        }
+
+        .legend-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #e94560;
+        }
+
+        .legend-note h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .legend-note p {
+            color: #c8c8c8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .data-table {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 20px;
+            background: rgba(233, 69, 96, 0.15);
+            border-radius: 10px;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .collapsible-header:hover {
+            background: rgba(233, 69, 96, 0.25);
+        }
+
+        .collapsible-header h3 {
+            color: #e94560;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .collapsible-header .toggle-icon {
+            color: #e94560;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .collapsible-header.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .collapsible-content.expanded {
+            max-height: 2000px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .highlight {
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .totals-row {
+            background: rgba(233, 69, 96, 0.15);
+            font-weight: bold;
+        }
+
+        .sources {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+        }
+
+        .sources h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+
+        .sources a {
+            color: #4da6ff;
+            text-decoration: none;
+        }
+
+        .sources ul {
+            list-style: none;
+            column-count: 2;
+            column-gap: 30px;
+        }
+
+        .sources li {
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container { height: 500px; }
+            .sources ul { column-count: 1; }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Where All The Money Goes: Total US Market Values (1970-2024)</h1>
+            <p class="subtitle">
+                A comprehensive view of total dollar values across all major categories: stocks, bonds, housing,
+                consumer spending (food, services, energy, automotive), and the M2 money supply.
+                All values in trillions of USD. Linear scale to show true relative sizes.
+            </p>
+        </header>
+
+        <div class="chart-section">
+            <h2>Total Market Values by Category (Stacked Bar Chart)</h2>
+            <p class="chart-description">
+                Each bar shows the total dollar value sitting in or flowing through each category for that year.
+                Asset markets (stocks, bonds, housing) show total market capitalization/value.
+                Consumer categories show annual spending. M2 shows total money supply.
+            </p>
+            <div class="chart-container">
+                <canvas id="totalMarketsChart"></canvas>
+            </div>
+
+            <div class="legend-note">
+                <h3>Reading This Chart</h3>
+                <p><strong>Asset Markets (Stock Values):</strong> Stocks, Bonds, Housing, Private Companies - these are TOTAL market values (the entire stock of wealth sitting in these assets).</p>
+                <p><strong>Consumer Spending (Flow Values):</strong> Food, Services, Energy, Automotive - these are ANNUAL spending (how much flows through these categories each year).</p>
+                <p><strong>M2 Money Supply:</strong> Total dollars in circulation (cash + checking + savings + money market funds).</p>
+                <p><strong>Key Insight:</strong> Notice how asset market values have grown far faster than consumer spending categories, and how all categories have grown faster than M2 money supply would suggest if money were evenly distributed.</p>
+            </div>
+        </div>
+
+        <!-- Data Table (Collapsible) -->
+        <div class="chart-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Complete Data Table (All Values in Trillions USD)</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="data-table">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Stocks</th>
+                                <th>Bonds</th>
+                                <th>Housing</th>
+                                <th>Private Co.</th>
+                                <th>Food</th>
+                                <th>Services</th>
+                                <th>Energy</th>
+                                <th>Auto</th>
+                                <th>Other Goods</th>
+                                <th>M2 Supply</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="sources">
+            <h3>Data Sources & Notes</h3>
+            <ul>
+                <li><strong>Stocks:</strong> Total US equity market capitalization (Siblis Research, World Bank, FRED)</li>
+                <li><strong>Bonds:</strong> Total US bond market size (SIFMA, Federal Reserve)</li>
+                <li><strong>Housing:</strong> Total US residential real estate value (Redfin, Federal Reserve Z.1)</li>
+                <li><strong>Private Companies:</strong> Estimated based on PE/VC assets + private business equity (rough estimates)</li>
+                <li><strong>Food:</strong> Total food expenditures (USDA ERS, BEA PCE)</li>
+                <li><strong>Services:</strong> Healthcare + Education + Other services spending (BEA PCE)</li>
+                <li><strong>Energy:</strong> Total energy expenditures (EIA SEDS)</li>
+                <li><strong>Automotive:</strong> New vehicle sales + parts/service (BEA, NADA)</li>
+                <li><strong>Other Goods:</strong> Remaining consumer goods (apparel, electronics, etc.)</li>
+                <li><strong>M2:</strong> M2 Money Supply (Federal Reserve, FRED)</li>
+            </ul>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">
+                Note: Some historical values are estimates based on available data and reasonable interpolation.
+                Private company values are particularly difficult to estimate and should be viewed as rough approximations.
+            </p>
+        </div>
+
+        <!-- Comprehensive Inflation Chart -->
+        <div class="chart-section">
+            <h2>Cumulative Growth: CPI vs Total Assets vs M2 (1970-2024)</h2>
+            <p class="chart-description">
+                This chart shows cumulative growth indexed to 1970=100. It answers: "If I had $100 in 1970, how much would I need
+                today to buy the same proportional share of everything?" CPI says ~$800. But total assets say ~$7,800.
+            </p>
+            <div class="chart-container" style="height: 500px;">
+                <canvas id="inflationChart"></canvas>
+            </div>
+
+            <div class="legend-note">
+                <h3>Methodology</h3>
+                <p><strong>Official CPI (Green):</strong> Bureau of Labor Statistics consumer price index — only measures consumer goods/services, excludes asset prices. Cumulative since 1970.</p>
+                <p><strong>Total Assets (Red):</strong> Cumulative growth of all asset values (stocks + bonds + housing + private companies). Calculated directly from market values, not averaged annual rates.</p>
+                <p><strong>M2 Money Supply (Yellow):</strong> Cumulative growth of M2 money supply.</p>
+                <p><strong>Key Finding:</strong> Assets grew ~78x while CPI says prices only grew ~8x. The difference is where inflation "hides" — in asset prices that CPI doesn't measure.</p>
+            </div>
+        </div>
+
+        <!-- Inflation Data Table (Collapsible) -->
+        <div class="chart-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Cumulative Growth Comparison Table (1970 = 100)</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>CPI Index (Multiplier)</th>
+                                <th>M2 Index (Multiplier)</th>
+                                <th>Assets Index (Multiplier)</th>
+                                <th>Assets vs CPI</th>
+                                <th>Assets vs M2</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inflationTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="chart-section">
+            <h2>Summary: 1970-2024</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="background: rgba(76, 175, 80, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #4CAF50; margin-bottom: 5px;">Official CPI (1970-2024)</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #4CAF50;">~700%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~8x increase | ~3.9%/year</div>
+                </div>
+                <div style="background: rgba(255, 215, 0, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #FFD700; margin-bottom: 5px;">M2 Money Supply Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #FFD700;">~3,450%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~35x | ~6.8%/year</div>
+                </div>
+                <div style="background: rgba(233, 69, 96, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #e94560; margin-bottom: 5px;">Total Asset Values Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #e94560;">~7,700%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~78x | ~8.4%/year</div>
+                </div>
+                <div style="background: rgba(77, 166, 255, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 0.9rem; color: #4da6ff; margin-bottom: 5px;">Blended "True" Inflation</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #4da6ff;">~7,200%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~73x | ~8.3%/year</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #a8a8a8; font-size: 0.9rem;">
+                <strong>The key insight:</strong> M2 money supply grew ~35x since 1970. Official CPI says prices went up ~8x.
+                But total asset values grew ~78x. The "true" cost of buying a proportional share of everything grew ~73x, not ~8x.
+                CPI only measures consumer goods (~$21T/year), ignoring assets (~$187T in value) where most wealth sits.
+            </p>
+        </div>
+
+        <!-- Wealth Distribution Chart -->
+        <div class="chart-section">
+            <h2>Who Owns the Wealth? Distribution by Group (1970-2024)</h2>
+            <p class="chart-description">
+                Total US household wealth distributed by ownership group. Shows how wealth concentration has shifted over time.
+                Note: Federal Reserve data on wealth percentiles only goes back to 1989; pre-1989 values are estimated from academic research (Saez & Zucman).
+            </p>
+            <div class="chart-container" style="height: 600px;">
+                <canvas id="wealthDistributionChart"></canvas>
+            </div>
+
+            <div class="legend-note">
+                <h3>Reading This Chart (Saez & Zucman estimates)</h3>
+                <p><strong>Bottom 50%:</strong> The lower half of US households by wealth. Their share collapsed from ~2% to near zero or negative (2008 crisis = underwater mortgages), recovering slightly to ~1.5%.</p>
+                <p><strong>Next 40% (50th-90th percentile):</strong> Upper-middle class. Share collapsed from ~32% to ~22% as their wage-based wealth couldn't keep pace with asset growth.</p>
+                <p><strong>Next 9% (90th-99th percentile):</strong> Affluent households. Share declined from ~35% to ~31% - they benefit from assets but not as much as top 1%.</p>
+                <p><strong>Top 0.9% (99th-99.9th percentile):</strong> Very wealthy. Share grew from ~15% to ~20%.</p>
+                <p><strong>Top 0.1%:</strong> Ultra-wealthy (billionaires). Share more than doubled from ~7% to ~17.5% - this is where parabolic stock gains concentrate.</p>
+                <p><strong>Foreign Entities:</strong> Non-US ownership of US assets (~4.5-5%).</p>
+                <p><strong>US Government:</strong> Federal, state, and local government-held assets (~3.5-4%).</p>
+                <p style="margin-top: 15px; color: #e94560;"><strong>Key insight:</strong> The top 1% (0.9% + 0.1%) went from ~22% to ~37.5% of all wealth. The top 10% went from ~57% to ~68.5%. Stocks grew 89x, owned ~90% by top 10%. Wages grew ~8x. The math is simple.</p>
+            </div>
+
+            <div class="legend-note" style="margin-top: 20px; background: rgba(77, 166, 255, 0.1); border-left-color: #4da6ff;">
+                <h3>Why Wealth Concentration Increased</h3>
+                <p><strong>Bottom 50% (~165M people):</strong> Own almost no stocks (~1% of equities). Wealth = car + maybe home equity + small savings. Wages grew ~8x (with CPI), but they don't own assets that grew 78x. Many have negative net worth (debt > assets). 2008 wiped them out because their one asset (home) went underwater.</p>
+                <p><strong>Next 40% (50th-90th percentile):</strong> Primary wealth = home equity + 401k. Save in nominal dollars (bank accounts, bonds, CDs). Own ~10% of stocks total. Home values grew ~50x (good but not 89x like stocks). Their 401k has some stocks, but contribution limits cap exposure. Share dropped 32% → 22% because their assets grew slower than top 10%'s.</p>
+                <p><strong>Next 9% (90th-99th):</strong> Larger 401k/IRA balances, more direct stock ownership. Multiple properties, some business ownership. Still mostly wage-dependent for income. Share dropped 35% → 31% - they benefited but not as much as top 1%.</p>
+                <p><strong>Top 1% (especially 0.1%):</strong> Massive direct stock/business ownership. Income from capital, not wages. Can buy assets when prices dip (2008, 2020). 22% → 37.5% because stocks went 89x and they owned most of them.</p>
+                <p style="margin-top: 15px; color: #4da6ff;"><strong>The math:</strong> If you owned $100k in stocks in 1970, you have $8.9M now. If you saved $100k in a bank account at 3%, you have ~$500k. Same starting point, 18x difference in outcome.</p>
+            </div>
+        </div>
+
+        <!-- Wealth Distribution Table (Collapsible) -->
+        <div class="chart-section">
+            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                <h3>Wealth Distribution Data Table (Share of Total US Wealth)</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="data-table">
+                    <table id="wealthTable">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Total Wealth</th>
+                                <th>Bottom 50%</th>
+                                <th>Next 40%</th>
+                                <th>Next 9%</th>
+                                <th>Top 0.9%</th>
+                                <th>Top 0.1%</th>
+                                <th>Foreign</th>
+                                <th>US Gov't</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wealthTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Data compiled from Federal Reserve, BLS, BEA, EIA, and financial industry sources. January 2025.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle function for collapsible tables
+        function toggleCollapsible(header) {
+            header.classList.toggle('expanded');
+            const content = header.nextElementSibling;
+            content.classList.toggle('expanded');
+        }
+
+        // Comprehensive data: All values in TRILLIONS of USD
+        // Annual data from 1970 to 2024
+        const years = [
+            '1970', '1971', '1972', '1973', '1974', '1975', '1976', '1977', '1978', '1979',
+            '1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989',
+            '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999',
+            '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009',
+            '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
+            '2020', '2021', '2022', '2023', '2024'
+        ];
+
+        // Data arrays (all in trillions USD) - Annual data
+        // Interpolated and estimated from available historical sources
+        const data = {
+            // ASSET MARKETS (Total Market Values / Stock of Wealth)
+            // US Stock Market Total Capitalization
+            stocks: [
+                0.70, 0.80, 1.00, 0.85, 0.60, 0.75, 0.90, 0.85, 1.00, 1.10,  // 1970-1979
+                1.40, 1.30, 1.30, 1.60, 1.80, 2.10, 2.50, 2.60, 2.80, 3.20,  // 1980-1989
+                3.50, 4.00, 4.50, 5.10, 5.50, 7.00, 8.50, 11.00, 13.00, 16.00, // 1990-1999
+                15.00, 13.00, 11.00, 13.00, 14.50, 15.00, 17.00, 18.00, 11.00, 12.00, // 2000-2009
+                17.00, 16.00, 20.00, 24.00, 26.00, 25.00, 27.00, 32.00, 33.00, 38.00, // 2010-2019
+                42.00, 53.00, 40.00, 50.00, 62.00  // 2020-2024
+            ],
+
+            // US Bond Market Size
+            bonds: [
+                0.40, 0.42, 0.50, 0.50, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95,  // 1970-1979
+                1.00, 1.20, 1.50, 1.70, 2.00, 2.30, 3.00, 3.50, 4.00, 4.50,  // 1980-1989
+                5.00, 5.80, 7.00, 7.50, 8.00, 9.00, 10.00, 11.00, 12.00, 13.50, // 1990-1999
+                15.00, 16.50, 18.00, 20.00, 22.00, 24.00, 27.00, 30.00, 33.00, 34.00, // 2000-2009
+                35.00, 36.00, 38.00, 39.00, 40.00, 40.50, 42.00, 43.00, 44.00, 46.00, // 2010-2019
+                50.00, 52.00, 52.00, 53.00, 55.00  // 2020-2024
+            ],
+
+            // US Residential Real Estate Total Value
+            housing: [
+                1.00, 1.05, 1.20, 1.30, 1.40, 1.55, 1.80, 2.10, 2.50, 2.80,  // 1970-1979
+                3.00, 3.10, 3.20, 3.50, 4.00, 4.50, 5.50, 6.20, 7.00, 7.50,  // 1980-1989
+                8.00, 7.80, 8.50, 8.80, 9.00, 9.50, 10.50, 11.50, 12.00, 13.50, // 1990-1999
+                14.00, 15.00, 16.00, 18.00, 20.00, 23.00, 25.00, 24.00, 20.00, 17.50, // 2000-2009
+                18.00, 17.00, 22.00, 25.00, 28.00, 29.50, 30.00, 32.00, 34.00, 35.00, // 2010-2019
+                36.00, 43.00, 45.00, 47.00, 50.00  // 2020-2024
+            ],
+
+            // Private companies (rough estimates - PE/VC + private business equity)
+            privateCompanies: [
+                0.30, 0.32, 0.40, 0.38, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65,  // 1970-1979
+                0.70, 0.75, 0.80, 0.90, 1.00, 1.10, 1.20, 1.30, 1.50, 1.70,  // 1980-1989
+                2.00, 2.20, 2.50, 2.80, 3.00, 3.50, 4.00, 4.50, 5.00, 5.50,  // 1990-1999
+                6.00, 5.50, 5.50, 5.70, 6.00, 6.20, 7.00, 7.50, 6.00, 6.00,  // 2000-2009
+                7.00, 7.50, 8.00, 9.00, 10.00, 11.00, 12.00, 13.00, 14.00, 15.00, // 2010-2019
+                16.00, 18.00, 18.00, 19.00, 20.00  // 2020-2024
+            ],
+
+            // CONSUMER SPENDING (Annual Flow Values)
+            // Food spending
+            food: [
+                0.12, 0.13, 0.14, 0.15, 0.17, 0.18, 0.20, 0.22, 0.25, 0.28,  // 1970-1979
+                0.30, 0.31, 0.33, 0.34, 0.37, 0.39, 0.42, 0.44, 0.48, 0.51,  // 1980-1989
+                0.55, 0.56, 0.58, 0.60, 0.64, 0.67, 0.70, 0.72, 0.76, 0.79,  // 1990-1999
+                0.82, 0.84, 0.88, 0.91, 0.96, 1.00, 1.05, 1.10, 1.15, 1.16,  // 2000-2009
+                1.20, 1.24, 1.30, 1.35, 1.42, 1.47, 1.52, 1.58, 1.65, 1.72,  // 2010-2019
+                1.80, 1.95, 2.20, 2.40, 2.58  // 2020-2024
+            ],
+
+            // Services spending (healthcare, education, other services)
+            services: [
+                0.15, 0.16, 0.18, 0.20, 0.22, 0.25, 0.28, 0.31, 0.35, 0.40,  // 1970-1979
+                0.45, 0.50, 0.55, 0.60, 0.70, 0.80, 0.90, 1.00, 1.10, 1.25,  // 1980-1989
+                1.40, 1.55, 1.70, 1.85, 2.00, 2.20, 2.40, 2.60, 2.80, 3.05,  // 1990-1999
+                3.30, 3.55, 3.80, 4.10, 4.40, 4.70, 5.10, 5.50, 5.80, 6.00,  // 2000-2009
+                6.30, 6.60, 7.00, 7.40, 7.80, 8.10, 8.50, 8.90, 9.30, 9.70,  // 2010-2019
+                10.00, 10.70, 11.50, 12.20, 13.00  // 2020-2024
+            ],
+
+            // Energy spending
+            energy: [
+                0.08, 0.08, 0.09, 0.10, 0.15, 0.16, 0.18, 0.20, 0.22, 0.30,  // 1970-1979
+                0.35, 0.38, 0.38, 0.36, 0.36, 0.34, 0.32, 0.33, 0.35, 0.38,  // 1980-1989
+                0.40, 0.40, 0.42, 0.43, 0.44, 0.46, 0.48, 0.47, 0.45, 0.52,  // 1990-1999
+                0.60, 0.55, 0.55, 0.62, 0.70, 0.85, 0.90, 0.95, 1.10, 0.80,  // 2000-2009
+                0.95, 1.05, 1.00, 0.98, 1.10, 0.85, 0.90, 0.95, 1.05, 1.00,  // 2010-2019
+                0.85, 1.00, 1.30, 1.20, 1.20  // 2020-2024
+            ],
+
+            // Automotive spending (new vehicles + parts/service)
+            automotive: [
+                0.04, 0.05, 0.05, 0.06, 0.05, 0.06, 0.07, 0.08, 0.09, 0.09,  // 1970-1979
+                0.10, 0.11, 0.12, 0.14, 0.16, 0.18, 0.20, 0.21, 0.24, 0.26,  // 1980-1989
+                0.28, 0.27, 0.30, 0.34, 0.38, 0.40, 0.45, 0.48, 0.52, 0.56,  // 1990-1999
+                0.60, 0.62, 0.62, 0.64, 0.68, 0.70, 0.72, 0.70, 0.55, 0.52,  // 2000-2009
+                0.58, 0.62, 0.68, 0.72, 0.75, 0.78, 0.82, 0.85, 0.88, 0.90,  // 2010-2019
+                0.78, 0.85, 0.95, 0.98, 1.00  // 2020-2024
+            ],
+
+            // Other consumer goods (apparel, electronics, furniture, etc.)
+            otherGoods: [
+                0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.17, 0.19, 0.22, 0.25,  // 1970-1979
+                0.28, 0.30, 0.32, 0.36, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65,  // 1980-1989
+                0.70, 0.72, 0.78, 0.84, 0.88, 0.95, 1.00, 1.08, 1.15, 1.22,  // 1990-1999
+                1.30, 1.30, 1.35, 1.42, 1.50, 1.58, 1.70, 1.75, 1.60, 1.55,  // 2000-2009
+                1.65, 1.72, 1.80, 1.90, 2.00, 2.10, 2.20, 2.30, 2.40, 2.55,  // 2010-2019
+                2.80, 3.10, 3.20, 3.35, 3.50  // 2020-2024
+            ],
+
+            // M2 MONEY SUPPLY
+            m2: [
+                0.60, 0.68, 0.80, 0.86, 0.90, 1.00, 1.10, 1.25, 1.40, 1.50,  // 1970-1979
+                1.60, 1.75, 1.90, 2.10, 2.30, 2.50, 2.70, 2.85, 3.00, 3.15,  // 1980-1989
+                3.30, 3.35, 3.40, 3.45, 3.50, 3.65, 3.80, 4.00, 4.40, 4.65,  // 1990-1999
+                4.90, 5.40, 5.80, 6.10, 6.40, 6.70, 7.10, 7.50, 8.20, 8.50,  // 2000-2009
+                8.80, 9.60, 10.40, 10.90, 11.70, 12.30, 13.20, 13.90, 14.40, 15.30, // 2010-2019
+                19.40, 21.00, 21.50, 20.80, 21.30  // 2020-2024
+            ]
+        };
+
+        // Official CPI year-over-year (annual data from BLS)
+        const officialCPIAnnual = [
+            5.7, 4.4, 3.2, 6.2, 11.0, 9.1, 5.8, 6.5, 7.6, 11.3,  // 1970-1979
+            13.5, 10.3, 6.2, 3.2, 4.3, 3.6, 1.9, 3.6, 4.1, 4.8,  // 1980-1989
+            5.4, 4.2, 3.0, 3.0, 2.6, 2.8, 2.9, 2.3, 1.6, 2.2,    // 1990-1999
+            3.4, 2.8, 1.6, 2.3, 2.7, 3.4, 3.2, 2.8, 3.8, -0.4,   // 2000-2009
+            1.6, 3.2, 2.1, 1.5, 1.6, 0.1, 1.3, 2.1, 2.4, 1.8,    // 2010-2019
+            1.2, 4.7, 8.0, 4.1, 2.9  // 2020-2024
+        ];
+
+        // Colors for each category
+        const colors = {
+            stocks: '#4da6ff',
+            bonds: '#FFD700',
+            housing: '#4CAF50',
+            privateCompanies: '#9b59b6',
+            food: '#ff8c00',
+            services: '#00bcd4',
+            energy: '#e94560',
+            automotive: '#ff69b4',
+            otherGoods: '#32CD32',
+            m2: 'rgba(255, 255, 255, 0.3)'
+        };
+
+        // Create the stacked bar chart
+        const ctx = document.getElementById('totalMarketsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'Stocks (Market Cap)',
+                        data: data.stocks,
+                        backgroundColor: colors.stocks,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Bonds (Market Size)',
+                        data: data.bonds,
+                        backgroundColor: colors.bonds,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Housing (Total Value)',
+                        data: data.housing,
+                        backgroundColor: colors.housing,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Private Companies (Est.)',
+                        data: data.privateCompanies,
+                        backgroundColor: colors.privateCompanies,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Food (Annual)',
+                        data: data.food,
+                        backgroundColor: colors.food,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Services (Annual)',
+                        data: data.services,
+                        backgroundColor: colors.services,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Energy (Annual)',
+                        data: data.energy,
+                        backgroundColor: colors.energy,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Automotive (Annual)',
+                        data: data.automotive,
+                        backgroundColor: colors.automotive,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'Other Goods (Annual)',
+                        data: data.otherGoods,
+                        backgroundColor: colors.otherGoods,
+                        stack: 'total'
+                    },
+                    {
+                        label: 'M2 Money Supply',
+                        data: data.m2,
+                        backgroundColor: colors.m2,
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        stack: 'total'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#e8e8e8',
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw.toFixed(2) + 'T';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a8a8a8' }
+                    },
+                    y: {
+                        stacked: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: '#a8a8a8',
+                            callback: function(value) { return '$' + value + 'T'; }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Trillions USD',
+                            color: '#a8a8a8'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate the data table
+        const tableBody = document.getElementById('tableBody');
+        years.forEach((year, i) => {
+            const total = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i] +
+                          data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+
+            const row = document.createElement('tr');
+            if (year === '2024') row.classList.add('highlight');
+
+            row.innerHTML = `
+                <td>${year}</td>
+                <td>$${data.stocks[i].toFixed(2)}</td>
+                <td>$${data.bonds[i].toFixed(2)}</td>
+                <td>$${data.housing[i].toFixed(2)}</td>
+                <td>$${data.privateCompanies[i].toFixed(2)}</td>
+                <td>$${data.food[i].toFixed(2)}</td>
+                <td>$${data.services[i].toFixed(2)}</td>
+                <td>$${data.energy[i].toFixed(2)}</td>
+                <td>$${data.automotive[i].toFixed(2)}</td>
+                <td>$${data.otherGoods[i].toFixed(2)}</td>
+                <td>$${data.m2[i].toFixed(2)}</td>
+                <td class="highlight">$${total.toFixed(2)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Add totals row for 2024
+        const lastIdx = years.length - 1;
+        const totalsRow = document.createElement('tr');
+        totalsRow.classList.add('totals-row');
+        const total2024 = data.stocks[lastIdx] + data.bonds[lastIdx] + data.housing[lastIdx] + data.privateCompanies[lastIdx] +
+                          data.food[lastIdx] + data.services[lastIdx] + data.energy[lastIdx] + data.automotive[lastIdx] + data.otherGoods[lastIdx];
+        const assets2024 = data.stocks[lastIdx] + data.bonds[lastIdx] + data.housing[lastIdx] + data.privateCompanies[lastIdx];
+        const consumer2024 = data.food[lastIdx] + data.services[lastIdx] + data.energy[lastIdx] + data.automotive[lastIdx] + data.otherGoods[lastIdx];
+
+        totalsRow.innerHTML = `
+            <td>2024 Summary</td>
+            <td colspan="4" style="text-align:center;">Assets: $${assets2024.toFixed(1)}T</td>
+            <td colspan="5" style="text-align:center;">Consumer: $${consumer2024.toFixed(1)}T/yr</td>
+            <td>$${data.m2[lastIdx].toFixed(1)}T</td>
+            <td>$${total2024.toFixed(1)}T</td>
+        `;
+        tableBody.appendChild(totalsRow);
+
+        // ============================================
+        // CUMULATIVE GROWTH CALCULATION (Direct from Market Values)
+        // ============================================
+
+        // Calculate cumulative growth indexed to 1970 = 100
+        function calculateCumulativeGrowth() {
+            // Base year values (1970)
+            const baseAssets = data.stocks[0] + data.bonds[0] + data.housing[0] + data.privateCompanies[0];
+            const baseConsumer = data.food[0] + data.services[0] + data.energy[0] + data.automotive[0] + data.otherGoods[0];
+            const baseM2 = data.m2[0];
+
+            // Calculate cumulative CPI (compound from annual rates)
+            const cumulativeCPI = [100];
+            for (let i = 1; i < years.length; i++) {
+                cumulativeCPI.push(cumulativeCPI[i-1] * (1 + officialCPIAnnual[i] / 100));
+            }
+
+            // Calculate cumulative asset growth (directly from values)
+            const cumulativeAssets = [];
+            for (let i = 0; i < years.length; i++) {
+                const totalAssets = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i];
+                cumulativeAssets.push((totalAssets / baseAssets) * 100);
+            }
+
+            // Calculate cumulative consumer spending growth (directly from values)
+            const cumulativeConsumer = [];
+            for (let i = 0; i < years.length; i++) {
+                const totalConsumer = data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+                cumulativeConsumer.push((totalConsumer / baseConsumer) * 100);
+            }
+
+            // Calculate cumulative M2 growth (directly from values)
+            const cumulativeM2 = [];
+            for (let i = 0; i < years.length; i++) {
+                cumulativeM2.push((data.m2[i] / baseM2) * 100);
+            }
+
+            // Calculate blended "true inflation" - weighted by relative size each year
+            // Weight assets and consumer spending by their dollar values
+            const cumulativeBlended = [];
+            for (let i = 0; i < years.length; i++) {
+                const totalAssets = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i];
+                const totalConsumer = data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+                const totalValue = totalAssets + totalConsumer;
+
+                // Weight by current year proportions
+                const assetWeight = totalAssets / totalValue;
+                const consumerWeight = totalConsumer / totalValue;
+
+                const blendedIndex = (cumulativeAssets[i] * assetWeight) + (cumulativeConsumer[i] * consumerWeight);
+                cumulativeBlended.push(blendedIndex);
+            }
+
+            return { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeBlended };
+        }
+
+        const { cumulativeCPI, cumulativeAssets, cumulativeConsumer, cumulativeM2, cumulativeBlended } = calculateCumulativeGrowth();
+
+        // Create cumulative growth chart (line chart for clarity)
+        const inflationCtx = document.getElementById('inflationChart').getContext('2d');
+        new Chart(inflationCtx, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'Official CPI',
+                        data: cumulativeCPI,
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'M2 Money Supply',
+                        data: cumulativeM2,
+                        borderColor: '#FFD700',
+                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Total Assets',
+                        data: cumulativeAssets,
+                        borderColor: '#e94560',
+                        backgroundColor: 'rgba(233, 69, 96, 0.1)',
+                        borderWidth: 3,
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Blended (Assets + Consumer)',
+                        data: cumulativeBlended,
+                        borderColor: '#4da6ff',
+                        backgroundColor: 'rgba(77, 166, 255, 0.1)',
+                        borderWidth: 4,
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#e8e8e8' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const growth = (context.raw - 100).toFixed(0);
+                                const multiplier = (context.raw / 100).toFixed(1);
+                                return context.dataset.label + ': ' + context.raw.toFixed(0) + ' (' + multiplier + 'x, +' + growth + '%)';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a8a8a8', maxRotation: 45 }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: '#a8a8a8',
+                            callback: function(value) { return value.toLocaleString(); }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Index (1970 = 100)',
+                            color: '#a8a8a8'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate inflation table (show every 5 years to keep table manageable)
+        const inflationTableBody = document.getElementById('inflationTableBody');
+
+        years.forEach((year, i) => {
+            const yearNum = parseInt(year);
+            // Only show every 5 years + 2024 to keep table readable
+            if (yearNum % 5 === 0 || year === '2024') {
+                const row = document.createElement('tr');
+                const cpiVal = cumulativeCPI[i];
+                const m2Val = cumulativeM2[i];
+                const assetVal = cumulativeAssets[i];
+
+                row.innerHTML = `
+                    <td>${year}</td>
+                    <td style="color: #4CAF50;">${cpiVal.toFixed(0)} (${(cpiVal/100).toFixed(1)}x)</td>
+                    <td style="color: #FFD700;">${m2Val.toFixed(0)} (${(m2Val/100).toFixed(1)}x)</td>
+                    <td style="color: #e94560;">${assetVal.toFixed(0)} (${(assetVal/100).toFixed(1)}x)</td>
+                    <td>${(assetVal / cpiVal).toFixed(1)}x</td>
+                    <td>${(assetVal / m2Val).toFixed(1)}x</td>
+                `;
+                inflationTableBody.appendChild(row);
+            }
+        });
+
+        // Add summary row
+        const summaryRow = document.createElement('tr');
+        summaryRow.classList.add('totals-row');
+        const finalCPI = cumulativeCPI[cumulativeCPI.length - 1];
+        const finalM2 = cumulativeM2[cumulativeM2.length - 1];
+        const finalAssets = cumulativeAssets[cumulativeAssets.length - 1];
+        summaryRow.innerHTML = `
+            <td><strong>1970-2024 Total</strong></td>
+            <td style="color: #4CAF50;"><strong>${(finalCPI - 100).toFixed(0)}% (${(finalCPI/100).toFixed(0)}x)</strong></td>
+            <td style="color: #FFD700;"><strong>${(finalM2 - 100).toFixed(0)}% (${(finalM2/100).toFixed(0)}x)</strong></td>
+            <td style="color: #e94560;"><strong>${(finalAssets - 100).toFixed(0)}% (${(finalAssets/100).toFixed(0)}x)</strong></td>
+            <td><strong>${(finalAssets / finalCPI).toFixed(1)}x more</strong></td>
+            <td><strong>${(finalAssets / finalM2).toFixed(1)}x more</strong></td>
+        `;
+        inflationTableBody.appendChild(summaryRow);
+
+        // ============================================
+        // WEALTH DISTRIBUTION CHART
+        // ============================================
+
+        // Total US wealth by year (trillions) - household + nonprofit wealth
+        // Sources: Federal Reserve Z.1, Saez & Zucman estimates for pre-1989
+        const totalWealth = [
+            3.5, 3.8, 4.3, 4.5, 4.0, 4.5, 5.2, 5.8, 6.5, 7.5,      // 1970-1979
+            8.5, 9.0, 9.5, 10.5, 11.5, 13.0, 15.0, 16.0, 17.5, 19.0, // 1980-1989
+            20.0, 21.0, 23.0, 25.0, 27.0, 31.0, 35.0, 40.0, 45.0, 52.0, // 1990-1999
+            50.0, 48.0, 46.0, 52.0, 58.0, 65.0, 70.0, 72.0, 56.0, 60.0, // 2000-2009
+            65.0, 68.0, 75.0, 85.0, 92.0, 96.0, 100.0, 110.0, 115.0, 125.0, // 2010-2019
+            135.0, 155.0, 150.0, 160.0, 175.0  // 2020-2024
+        ];
+
+        // Wealth distribution percentages by group
+        // Source: Saez & Zucman (2016, updated) - "Wealth Inequality in the United States since 1913"
+        // https://gabriel-zucman.eu/uswealth/
+        // Key finding: Top 0.1% rose from ~7% (1978) to ~18-20% (2019)
+
+        const wealthDistribution = {
+            // Bottom 50% share - minimal stock ownership, wage-dependent
+            // Saez/Zucman show decline from ~2% to near 0% or negative
+            bottom50: [
+                2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0,    // 1970-1979
+                2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.5, 1.5,    // 1980-1989
+                1.5, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,    // 1990-1999
+                1.0, 1.0, 1.0, 1.0, 0.5, 0.5, 0.0, -0.5, -1.0, 0.0,  // 2000-2009
+                0.5, 0.5, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.5, 1.5,    // 2010-2019
+                1.5, 2.0, 1.5, 1.5, 1.5   // 2020-2024
+            ],
+
+            // Next 40% (50th-90th percentile) - upper middle class
+            // Saez/Zucman show decline from ~32% to ~22%
+            next40: [
+                32.0, 32.0, 32.0, 32.0, 32.0, 32.0, 31.5, 31.5, 31.0, 31.0,  // 1970-1979
+                30.5, 30.0, 29.5, 29.0, 28.5, 28.0, 27.5, 27.0, 26.5, 26.0,  // 1980-1989
+                25.5, 25.0, 24.5, 24.0, 23.5, 23.0, 23.0, 23.0, 22.5, 22.5,  // 1990-1999
+                22.0, 22.0, 22.0, 22.0, 22.0, 22.0, 22.0, 22.0, 23.0, 23.0,  // 2000-2009
+                22.5, 22.5, 22.0, 22.0, 22.0, 22.0, 22.0, 22.0, 22.0, 22.0,  // 2010-2019
+                22.0, 21.5, 22.0, 22.0, 22.0   // 2020-2024
+            ],
+
+            // Next 9% (90th-99th percentile) - affluent professionals
+            // Saez/Zucman show decline from ~35% to ~30-31%
+            next9: [
+                35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0, 35.0,  // 1970-1979
+                35.0, 35.0, 35.0, 35.0, 34.5, 34.5, 34.0, 34.0, 34.0, 34.0,  // 1980-1989
+                33.0, 32.5, 32.5, 32.5, 32.0, 32.5, 32.0, 32.5, 32.0, 32.0,  // 1990-1999
+                31.5, 31.5, 31.5, 31.5, 31.5, 31.0, 31.0, 30.5, 30.5, 30.5,  // 2000-2009
+                31.0, 31.0, 31.0, 31.0, 31.0, 31.0, 31.0, 31.0, 31.0, 31.0,  // 2010-2019
+                31.0, 31.0, 31.0, 31.0, 31.0   // 2020-2024
+            ],
+
+            // Top 0.9% (99th-99.9th percentile) - very wealthy
+            // Saez/Zucman: Top 1% grew from ~22% to ~40%, split here as ~15% to ~20%
+            top09: [
+                15.0, 15.0, 15.0, 15.0, 15.0, 15.0, 15.5, 15.5, 16.0, 16.0,  // 1970-1979
+                16.5, 16.5, 17.0, 17.0, 17.5, 17.5, 18.0, 18.0, 18.5, 18.5,  // 1980-1989
+                19.0, 19.0, 19.5, 19.5, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0,  // 1990-1999
+                20.5, 20.5, 20.5, 20.5, 20.5, 20.5, 20.5, 20.5, 20.0, 20.0,  // 2000-2009
+                20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0,  // 2010-2019
+                20.0, 20.0, 20.0, 20.0, 20.0   // 2020-2024
+            ],
+
+            // Top 0.1% (ultra-wealthy) - billionaires and near-billionaires
+            // Saez/Zucman: Rose from ~7% (1978) to ~15-20% (avg ~17.5%) (2012-2019)
+            top01: [
+                7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0,    // 1970-1979
+                7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, // 1980-1989
+                12.0, 13.0, 13.5, 14.0, 15.0, 15.0, 15.5, 15.5, 16.0, 16.5,  // 1990-1999
+                17.0, 16.5, 16.0, 16.0, 16.5, 17.0, 17.5, 18.0, 17.0, 17.0,  // 2000-2009
+                17.5, 17.5, 17.5, 17.5, 17.5, 17.5, 17.5, 17.5, 17.5, 17.5,  // 2010-2019
+                17.5, 17.5, 17.5, 17.5, 17.5   // 2020-2024
+            ],
+
+            // Foreign ownership of US assets (as % of total)
+            foreign: [
+                5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,    // 1970-1979
+                5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,    // 1980-1989
+                5.0, 5.0, 5.0, 5.0, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5,    // 1990-1999
+                4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 5.0, 5.0,    // 2000-2009
+                4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5, 4.5,    // 2010-2019
+                4.5, 4.5, 4.5, 4.5, 4.5   // 2020-2024
+            ],
+
+            // US Government assets (federal + state/local) as % of total
+            government: [
+                4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0,    // 1970-1979
+                4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0,    // 1980-1989
+                4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0,    // 1990-1999
+                3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4.0, 4.0,    // 2000-2009
+                3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5,    // 2010-2019
+                3.5, 3.5, 3.5, 3.5, 3.5   // 2020-2024
+            ]
+        };
+
+        // Create wealth distribution stacked bar chart
+        const wealthCtx = document.getElementById('wealthDistributionChart').getContext('2d');
+        new Chart(wealthCtx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [
+                    {
+                        label: 'Bottom 50%',
+                        data: wealthDistribution.bottom50,
+                        backgroundColor: '#e94560',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Next 40% (50-90th)',
+                        data: wealthDistribution.next40,
+                        backgroundColor: '#ff8c00',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Next 9% (90-99th)',
+                        data: wealthDistribution.next9,
+                        backgroundColor: '#FFD700',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Top 0.9% (99-99.9th)',
+                        data: wealthDistribution.top09,
+                        backgroundColor: '#4CAF50',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Top 0.1%',
+                        data: wealthDistribution.top01,
+                        backgroundColor: '#4da6ff',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'Foreign Entities',
+                        data: wealthDistribution.foreign,
+                        backgroundColor: '#9b59b6',
+                        stack: 'stack1'
+                    },
+                    {
+                        label: 'US Government',
+                        data: wealthDistribution.government,
+                        backgroundColor: '#00bcd4',
+                        stack: 'stack1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#e8e8e8',
+                            padding: 10,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const idx = context.dataIndex;
+                                const pct = context.raw;
+                                const total = totalWealth[idx];
+                                const amount = (pct / 100 * total).toFixed(1);
+                                return context.dataset.label + ': ' + pct.toFixed(1) + '% ($' + amount + 'T)';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#a8a8a8', maxRotation: 45 }
+                    },
+                    y: {
+                        stacked: true,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: '#a8a8a8',
+                            callback: function(value) { return value + '%'; }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Share of Total Wealth (%)',
+                            color: '#a8a8a8'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate wealth distribution table (every 5 years)
+        const wealthTableBody = document.getElementById('wealthTableBody');
+        years.forEach((year, i) => {
+            const yearNum = parseInt(year);
+            if (yearNum % 5 === 0 || year === '2024') {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${year}</td>
+                    <td>$${totalWealth[i].toFixed(1)}T</td>
+                    <td style="color: #e94560;">${wealthDistribution.bottom50[i].toFixed(1)}%</td>
+                    <td style="color: #ff8c00;">${wealthDistribution.next40[i].toFixed(1)}%</td>
+                    <td style="color: #FFD700;">${wealthDistribution.next9[i].toFixed(1)}%</td>
+                    <td style="color: #4CAF50;">${wealthDistribution.top09[i].toFixed(1)}%</td>
+                    <td style="color: #4da6ff;">${wealthDistribution.top01[i].toFixed(1)}%</td>
+                    <td style="color: #9b59b6;">${wealthDistribution.foreign[i].toFixed(1)}%</td>
+                    <td style="color: #00bcd4;">${wealthDistribution.government[i].toFixed(1)}%</td>
+                `;
+                wealthTableBody.appendChild(row);
+            }
+        });
+    </script>
+</body>
+</html>
