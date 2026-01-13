@@ -222,19 +222,19 @@
 <body>
     <div class="container">
         <header>
-            <h1>Where All The Money Goes: US Market Values Per Capita (1970-2024)</h1>
+            <h1>Where All The Money Goes: US Total Market Values (1970-2024)</h1>
             <p class="subtitle">
-                A comprehensive view of dollar values per person across all major categories: stocks, bonds, housing,
+                A comprehensive view of total dollar values across all major categories: stocks, bonds, housing,
                 consumer spending (food, services, energy, automotive), and the M2 money supply.
-                All values shown per capita (adjusted for population growth from 205M to 340M people).
-                This reveals true individual wealth trends independent of population changes.
+                All values shown as total market values in trillions of USD.
+                This reveals true wealth growth trends from 1970 to 2024.
             </p>
         </header>
 
         <!-- Data Table (Collapsible) -->
         <div class="chart-section">
             <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                <h3>Complete Data Table (All Values Per Capita in Thousands USD)</h3>
+                <h3>Complete Data Table (All Values in Trillions USD)</h3>
                 <span class="toggle-icon">▼</span>
             </div>
             <div class="collapsible-content">
@@ -286,23 +286,23 @@
 
         <!-- Comprehensive Inflation Chart -->
         <div class="chart-section">
-            <h2>Cumulative Growth Per Capita: CPI vs Assets vs GDP vs M2 (1970-2024)</h2>
+            <h2>Cumulative Growth: CPI vs Assets vs GDP vs M2 (1970-2024)</h2>
             <p class="chart-description">
-                This chart shows cumulative growth per person indexed to 1970=100. All values adjusted for population growth (205M → 340M).
-                It answers: "If I had $100 per capita in 1970, how much would I need per capita today?" CPI says ~$800. But total assets say ~$4,700 per person.
+                This chart shows cumulative growth indexed to 1970=100 for total values.
+                It answers: "If I had $100 in 1970, how much would I need today?" CPI says ~$800. But total assets say ~$7,800.
             </p>
             <div class="chart-container" style="height: 500px;">
                 <canvas id="inflationChart"></canvas>
             </div>
 
             <div class="legend-note">
-                <h3>Methodology (All Per Capita)</h3>
+                <h3>Methodology</h3>
                 <p><strong>Official CPI (Green):</strong> Bureau of Labor Statistics consumer price index — only measures consumer goods/services, excludes asset prices. Cumulative since 1970.</p>
-                <p><strong>Nominal GDP (Purple):</strong> Per capita GDP growth. Economy grew ~5.2x per person (from ~$5,200 to ~$27,000 per capita) adjusted for population.</p>
-                <p><strong>M2 Money Supply (Yellow):</strong> Per capita M2 growth (cash + checking + savings + money markets). Grew ~4.4x per person after adjusting for population.</p>
-                <p><strong>M0 Monetary Base (Salmon):</strong> Per capita monetary base. Grew ~4.4x per person. Exploded after 2008 QE and 2020 COVID response.</p>
-                <p><strong>Total Assets (Red):</strong> Per capita asset growth (stocks + bonds + housing + private companies). Grew ~4.7x per person.</p>
-                <p><strong>Key Finding:</strong> Per capita assets grew ~4.7x while CPI says prices grew ~8x. This shows individual wealth grew faster than reported inflation but not as dramatically as raw totals suggest. Population growth masked individual gains.</p>
+                <p><strong>Nominal GDP (Purple):</strong> Total GDP growth. Economy grew ~27x (from $1.07T to $29T).</p>
+                <p><strong>M2 Money Supply (Yellow):</strong> Total M2 growth (cash + checking + savings + money markets). Grew ~27x.</p>
+                <p><strong>M0 Monetary Base (Salmon):</strong> Total monetary base. Grew ~73x. Exploded after 2008 QE and 2020 COVID response.</p>
+                <p><strong>Total Assets (Red):</strong> Total asset growth (stocks + bonds + housing + private companies). Grew ~78x.</p>
+                <p><strong>Key Finding:</strong> Total assets grew ~78x while CPI says prices grew ~8x. Assets grew 10x faster than reported inflation, showing massive wealth creation primarily captured by asset owners.</p>
             </div>
         </div>
 
@@ -335,26 +335,26 @@
 
         <!-- Asset Growth: Expected vs Actual -->
         <div class="chart-section">
-            <h2>The Gap: Expected vs Actual Asset Growth Per Capita (1970-2024)</h2>
+            <h2>The Gap: Expected vs Actual Asset Growth (1970-2024)</h2>
             <p class="chart-description">
-                If per capita asset values had tracked GDP per capita (the economy per person), they would have grown ~5.2x. Instead they grew ~4.7x per person.
-                This shows assets actually grew SLOWER than GDP per capita — the "wealth gap" largely comes from population growth, not individual enrichment.
+                If total asset values had tracked GDP (the economy), they would have grown ~27x. Instead they grew ~78x.
+                This shows assets grew 2.9x FASTER than GDP — massive wealth creation primarily captured by those who own assets.
             </p>
             <div class="chart-container" style="height: 350px;">
                 <canvas id="attributionChart"></canvas>
             </div>
             <div class="legend-note">
-                <h3>The Story (Per Capita Perspective)</h3>
-                <p><strong>Expected (GDP-based):</strong> If $1,000 of per capita assets in 1970 grew with GDP per capita, it would be worth ~$5,200 per person today.</p>
-                <p><strong>Actual:</strong> $1,000 of per capita assets in 1970 is actually worth ~$4,700 per person today.</p>
-                <p><strong>The Gap (0.9x):</strong> Per capita assets grew SLOWER than GDP per capita. The average person's share of wealth didn't keep pace with economic growth.</p>
-                <p style="margin-top: 15px; color: #e94560;"><strong>Key insight:</strong> The dramatic 78x total asset growth is misleading. On a per capita basis, assets only grew ~4.7x vs GDP's ~5.2x. Population doubled (66% increase), creating the illusion of massive wealth creation when measured in raw totals. The real story: individual wealth grew modestly, and wealth became MORE concentrated at the top.</p>
+                <h3>The Story</h3>
+                <p><strong>Expected (GDP-based):</strong> If $1,000 of assets in 1970 grew with GDP, it would be worth ~$27,000 today.</p>
+                <p><strong>Actual:</strong> $1,000 of assets in 1970 is actually worth ~$78,000 today.</p>
+                <p><strong>The Gap (2.9x):</strong> Assets grew 2.9x FASTER than GDP. The wealth gap comes from asset price appreciation far exceeding economic growth.</p>
+                <p style="margin-top: 15px; color: #e94560;"><strong>Key insight:</strong> The 78x total asset growth massively outpaced the 27x GDP growth. Asset owners captured wealth far beyond their contribution to economic output. Meanwhile, wealth became increasingly concentrated at the top 1%, who own 72% of high-growth assets (stocks + business equity).</p>
             </div>
         </div>
 
         <!-- Summary Stats -->
         <div class="chart-section">
-            <h2>Summary Per Capita: 1970-2024</h2>
+            <h2>Summary Total Growth: 1970-2024</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
                 <div style="background: rgba(76, 175, 80, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
                     <div style="font-size: 0.9rem; color: #4CAF50; margin-bottom: 5px;">Official CPI (1970-2024)</div>
@@ -362,30 +362,30 @@
                     <div style="font-size: 0.85rem; color: #888;">~8x increase | ~3.9%/year</div>
                 </div>
                 <div style="background: rgba(155, 89, 182, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 0.9rem; color: #9b59b6; margin-bottom: 5px;">GDP Per Capita Growth</div>
-                    <div style="font-size: 2rem; font-weight: bold; color: #9b59b6;">~420%</div>
-                    <div style="font-size: 0.85rem; color: #888;">~5.2x | ~3.2%/year</div>
+                    <div style="font-size: 0.9rem; color: #9b59b6; margin-bottom: 5px;">Total GDP Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #9b59b6;">~2,600%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~27x | ~6.3%/year</div>
                 </div>
                 <div style="background: rgba(255, 215, 0, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 0.9rem; color: #FFD700; margin-bottom: 5px;">M2 Per Capita Growth</div>
-                    <div style="font-size: 2rem; font-weight: bold; color: #FFD700;">~340%</div>
-                    <div style="font-size: 0.85rem; color: #888;">~4.4x | ~2.8%/year</div>
+                    <div style="font-size: 0.9rem; color: #FFD700; margin-bottom: 5px;">Total M2 Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #FFD700;">~2,600%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~27x | ~6.3%/year</div>
                 </div>
                 <div style="background: rgba(255, 100, 100, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 0.9rem; color: #ff6464; margin-bottom: 5px;">M0 Per Capita Growth</div>
-                    <div style="font-size: 2rem; font-weight: bold; color: #ff6464;">~340%</div>
-                    <div style="font-size: 0.85rem; color: #888;">~4.4x | ~2.8%/year</div>
+                    <div style="font-size: 0.9rem; color: #ff6464; margin-bottom: 5px;">Total M0 Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #ff6464;">~7,150%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~73x | ~8.2%/year</div>
                 </div>
                 <div style="background: rgba(233, 69, 96, 0.2); padding: 20px; border-radius: 10px; text-align: center;">
-                    <div style="font-size: 0.9rem; color: #e94560; margin-bottom: 5px;">Assets Per Capita Growth</div>
-                    <div style="font-size: 2rem; font-weight: bold; color: #e94560;">~370%</div>
-                    <div style="font-size: 0.85rem; color: #888;">~4.7x | ~2.9%/year</div>
+                    <div style="font-size: 0.9rem; color: #e94560; margin-bottom: 5px;">Total Assets Growth</div>
+                    <div style="font-size: 2rem; font-weight: bold; color: #e94560;">~7,700%</div>
+                    <div style="font-size: 0.85rem; color: #888;">~78x | ~8.3%/year</div>
                 </div>
             </div>
             <p style="margin-top: 20px; color: #a8a8a8; font-size: 0.9rem;">
-                <strong>The key insight:</strong> Population grew 66% (205M → 340M), dramatically changing the picture. Per capita assets grew ~4.7x vs CPI's ~8x.
-                The real story: individual wealth grew modestly (~2.9%/year), SLOWER than GDP per capita (~3.2%/year). The dramatic 78x total asset growth
-                was driven by population doubling, not individual enrichment. Meanwhile, wealth became increasingly concentrated at the top 1%.
+                <strong>The key insight:</strong> Total assets grew 78x while GDP grew 27x (2.9x faster). Assets grew 10x faster than reported CPI inflation.
+                The real story: massive wealth creation captured by asset owners, growing at 8.3%/year. Meanwhile, wealth became increasingly concentrated
+                at the top 1%, who own 72% of high-growth assets (stocks + business equity). The bottom 50% own just 1.5% of total wealth.
             </p>
         </div>
 
@@ -726,20 +726,21 @@
             331.4, 332.0, 333.3, 334.9, 340.0  // 2020-2024
         ];
 
-        // Convert all data to per capita (divide by population in millions, multiply by 1000000 to get thousands per person)
+        // Use raw data (no per capita adjustments)
+        // Note: We're keeping the same variable name for minimal code changes
         const dataPerCapita = {
-            stocks: data.stocks.map((val, i) => (val * 1000000) / population[i]),
-            bonds: data.bonds.map((val, i) => (val * 1000000) / population[i]),
-            housing: data.housing.map((val, i) => (val * 1000000) / population[i]),
-            privateCompanies: data.privateCompanies.map((val, i) => (val * 1000000) / population[i]),
-            food: data.food.map((val, i) => (val * 1000000) / population[i]),
-            services: data.services.map((val, i) => (val * 1000000) / population[i]),
-            energy: data.energy.map((val, i) => (val * 1000000) / population[i]),
-            automotive: data.automotive.map((val, i) => (val * 1000000) / population[i]),
-            otherGoods: data.otherGoods.map((val, i) => (val * 1000000) / population[i]),
-            m2: data.m2.map((val, i) => (val * 1000000) / population[i]),
-            m0: data.m0.map((val, i) => (val * 1000000) / population[i]),
-            gdp: data.gdp.map((val, i) => (val * 1000000) / population[i])
+            stocks: data.stocks,
+            bonds: data.bonds,
+            housing: data.housing,
+            privateCompanies: data.privateCompanies,
+            food: data.food,
+            services: data.services,
+            energy: data.energy,
+            automotive: data.automotive,
+            otherGoods: data.otherGoods,
+            m2: data.m2,
+            m0: data.m0,
+            gdp: data.gdp
         };
 
         // Colors for each category
@@ -757,7 +758,7 @@
             m0: 'rgba(255, 100, 100, 0.5)'
         };
 
-        // Populate the data table (per capita values in thousands)
+        // Populate the data table (total values in trillions)
         const tableBody = document.getElementById('tableBody');
         years.forEach((year, i) => {
             const total = dataPerCapita.stocks[i] + dataPerCapita.bonds[i] + dataPerCapita.housing[i] + dataPerCapita.privateCompanies[i] +
@@ -768,23 +769,23 @@
 
             row.innerHTML = `
                 <td>${year}</td>
-                <td>$${dataPerCapita.stocks[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.bonds[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.housing[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.privateCompanies[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.food[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.services[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.energy[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.automotive[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.otherGoods[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.m2[i].toFixed(0).toLocaleString()}</td>
-                <td>$${dataPerCapita.m0[i].toFixed(0).toLocaleString()}</td>
-                <td class="highlight">$${total.toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.stocks[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.bonds[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.housing[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.privateCompanies[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.food[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.services[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.energy[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.automotive[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.otherGoods[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.m2[i].toFixed(2)}T</td>
+                <td>$${dataPerCapita.m0[i].toFixed(2)}T</td>
+                <td class="highlight">$${total.toFixed(2)}T</td>
             `;
             tableBody.appendChild(row);
         });
 
-        // Add totals row for 2024 (per capita)
+        // Add totals row for 2024 (total values)
         const lastIdx = years.length - 1;
         const totalsRow = document.createElement('tr');
         totalsRow.classList.add('totals-row');
@@ -795,10 +796,10 @@
 
         totalsRow.innerHTML = `
             <td>2024 Summary</td>
-            <td colspan="4" style="text-align:center;">Assets: $${assets2024.toFixed(0).toLocaleString()} per capita</td>
-            <td colspan="5" style="text-align:center;">Consumer: $${consumer2024.toFixed(0).toLocaleString()} per capita/yr</td>
-            <td>$${dataPerCapita.m2[lastIdx].toFixed(0).toLocaleString()}</td>
-            <td>$${total2024.toFixed(0).toLocaleString()}</td>
+            <td colspan="4" style="text-align:center;">Assets: $${assets2024.toFixed(2)}T</td>
+            <td colspan="5" style="text-align:center;">Consumer: $${consumer2024.toFixed(2)}T/yr</td>
+            <td>$${dataPerCapita.m2[lastIdx].toFixed(2)}T</td>
+            <td>$${total2024.toFixed(2)}T</td>
         `;
         tableBody.appendChild(totalsRow);
 
@@ -806,9 +807,9 @@
         // CUMULATIVE GROWTH CALCULATION (Direct from Market Values)
         // ============================================
 
-        // Calculate cumulative growth indexed to 1970 = 100 (using per capita values)
+        // Calculate cumulative growth indexed to 1970 = 100 (using total values)
         function calculateCumulativeGrowth() {
-            // Base year values (1970) - per capita
+            // Base year values (1970) - total values in trillions
             const baseAssets = dataPerCapita.stocks[0] + dataPerCapita.bonds[0] + dataPerCapita.housing[0] + dataPerCapita.privateCompanies[0];
             const baseConsumer = dataPerCapita.food[0] + dataPerCapita.services[0] + dataPerCapita.energy[0] + dataPerCapita.automotive[0] + dataPerCapita.otherGoods[0];
             const baseM2 = dataPerCapita.m2[0];
@@ -821,39 +822,39 @@
                 cumulativeCPI.push(cumulativeCPI[i-1] * (1 + officialCPIAnnual[i] / 100));
             }
 
-            // Calculate cumulative asset growth (per capita)
+            // Calculate cumulative asset growth (total values)
             const cumulativeAssets = [];
             for (let i = 0; i < years.length; i++) {
                 const totalAssets = dataPerCapita.stocks[i] + dataPerCapita.bonds[i] + dataPerCapita.housing[i] + dataPerCapita.privateCompanies[i];
                 cumulativeAssets.push((totalAssets / baseAssets) * 100);
             }
 
-            // Calculate cumulative consumer spending growth (per capita)
+            // Calculate cumulative consumer spending growth (total values)
             const cumulativeConsumer = [];
             for (let i = 0; i < years.length; i++) {
                 const totalConsumer = dataPerCapita.food[i] + dataPerCapita.services[i] + dataPerCapita.energy[i] + dataPerCapita.automotive[i] + dataPerCapita.otherGoods[i];
                 cumulativeConsumer.push((totalConsumer / baseConsumer) * 100);
             }
 
-            // Calculate cumulative M2 growth (per capita)
+            // Calculate cumulative M2 growth (total values)
             const cumulativeM2 = [];
             for (let i = 0; i < years.length; i++) {
                 cumulativeM2.push((dataPerCapita.m2[i] / baseM2) * 100);
             }
 
-            // Calculate cumulative M0 growth (per capita)
+            // Calculate cumulative M0 growth (total values)
             const cumulativeM0 = [];
             for (let i = 0; i < years.length; i++) {
                 cumulativeM0.push((dataPerCapita.m0[i] / baseM0) * 100);
             }
 
-            // Calculate cumulative GDP growth (per capita)
+            // Calculate cumulative GDP growth (total values)
             const cumulativeGDP = [];
             for (let i = 0; i < years.length; i++) {
                 cumulativeGDP.push((dataPerCapita.gdp[i] / baseGDP) * 100);
             }
 
-            // Calculate blended "true inflation" - weighted by relative size each year (per capita)
+            // Calculate blended "true inflation" - weighted by relative size each year (total values)
             // Weight assets and consumer spending by their dollar values
             const cumulativeBlended = [];
             for (let i = 0; i < years.length; i++) {
@@ -1203,8 +1204,8 @@
             ]
         };
 
-        // Convert wealth to per capita (thousands per person)
-        const totalWealthPerCapita = totalWealth.map((val, i) => (val * 1000000) / population[i]);
+        // Use total wealth values (no per capita adjustment)
+        const totalWealthPerCapita = totalWealth; // Keeping variable name for minimal code changes
 
         // Create wealth distribution stacked bar chart
         const wealthCtx = document.getElementById('wealthDistributionChart').getContext('2d');
@@ -1275,8 +1276,8 @@
                                 const idx = context.dataIndex;
                                 const pct = context.raw;
                                 const total = totalWealthPerCapita[idx];
-                                const amount = (pct / 100 * total).toFixed(0);
-                                return context.dataset.label + ': ' + pct.toFixed(1) + '% ($' + amount.toLocaleString() + ' per capita)';
+                                const amount = (pct / 100 * total).toFixed(2);
+                                return context.dataset.label + ': ' + pct.toFixed(1) + '% ($' + amount + 'T)';
                             }
                         }
                     }
@@ -1313,7 +1314,7 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${year}</td>
-                    <td>$${totalWealthPerCapita[i].toFixed(0).toLocaleString()} per capita</td>
+                    <td>$${totalWealthPerCapita[i].toFixed(2)}T</td>
                     <td style="color: #e94560;">${wealthDistribution.bottom50[i].toFixed(1)}%</td>
                     <td style="color: #ff8c00;">${wealthDistribution.next40[i].toFixed(1)}%</td>
                     <td style="color: #FFD700;">${wealthDistribution.next9[i].toFixed(1)}%</td>
