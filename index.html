@@ -1326,6 +1326,33 @@
             }
         });
 
+        // Add summary row showing change from 1970 to 2024
+        const summaryRow = document.createElement('tr');
+        summaryRow.style.background = 'rgba(233, 69, 96, 0.1)';
+        summaryRow.style.fontWeight = 'bold';
+        summaryRow.style.borderTop = '2px solid #e94560';
+
+        const change_bottom50 = wealthDistribution.bottom50[54] - wealthDistribution.bottom50[0];
+        const change_next40 = wealthDistribution.next40[54] - wealthDistribution.next40[0];
+        const change_next9 = wealthDistribution.next9[54] - wealthDistribution.next9[0];
+        const change_top09 = wealthDistribution.top09[54] - wealthDistribution.top09[0];
+        const change_top01 = wealthDistribution.top01[54] - wealthDistribution.top01[0];
+        const change_foreign = wealthDistribution.foreign[54] - wealthDistribution.foreign[0];
+        const change_government = wealthDistribution.government[54] - wealthDistribution.government[0];
+
+        summaryRow.innerHTML = `
+            <td>Change (1970→2024)</td>
+            <td></td>
+            <td style="color: ${change_bottom50 >= 0 ? '#4CAF50' : '#e94560'};">${change_bottom50 > 0 ? '+' : ''}${change_bottom50.toFixed(1)}%</td>
+            <td style="color: ${change_next40 >= 0 ? '#4CAF50' : '#e94560'};">${change_next40 > 0 ? '+' : ''}${change_next40.toFixed(1)}%</td>
+            <td style="color: ${change_next9 >= 0 ? '#4CAF50' : '#e94560'};">${change_next9 > 0 ? '+' : ''}${change_next9.toFixed(1)}%</td>
+            <td style="color: ${change_top09 >= 0 ? '#4CAF50' : '#e94560'};">${change_top09 > 0 ? '+' : ''}${change_top09.toFixed(1)}%</td>
+            <td style="color: ${change_top01 >= 0 ? '#4CAF50' : '#e94560'};">${change_top01 > 0 ? '+' : ''}${change_top01.toFixed(1)}%</td>
+            <td style="color: ${change_foreign >= 0 ? '#4CAF50' : '#e94560'};">${change_foreign > 0 ? '+' : ''}${change_foreign.toFixed(1)}%</td>
+            <td style="color: ${change_government >= 0 ? '#4CAF50' : '#e94560'};">${change_government > 0 ? '+' : ''}${change_government.toFixed(1)}%</td>
+        `;
+        wealthTableBody.appendChild(summaryRow);
+
         // ============================================
         // ASSET COMPOSITION BY WEALTH GROUP CHART
         // Data from Federal Reserve Survey of Consumer Finances 2022
