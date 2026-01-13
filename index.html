@@ -222,18 +222,19 @@
 <body>
     <div class="container">
         <header>
-            <h1>Where All The Money Goes: Total US Market Values (1970-2024)</h1>
+            <h1>Where All The Money Goes: US Market Values Per Capita (1970-2024)</h1>
             <p class="subtitle">
-                A comprehensive view of total dollar values across all major categories: stocks, bonds, housing,
+                A comprehensive view of dollar values per person across all major categories: stocks, bonds, housing,
                 consumer spending (food, services, energy, automotive), and the M2 money supply.
-                All values in trillions of USD. Linear scale to show true relative sizes.
+                All values shown per capita (adjusted for population growth from 205M to 340M people).
+                This reveals true individual wealth trends independent of population changes.
             </p>
         </header>
 
         <!-- Data Table (Collapsible) -->
         <div class="chart-section">
             <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                <h3>Complete Data Table (All Values in Trillions USD)</h3>
+                <h3>Complete Data Table (All Values Per Capita in Thousands USD)</h3>
                 <span class="toggle-icon">▼</span>
             </div>
             <div class="collapsible-content">
@@ -714,6 +715,33 @@
             1.2, 4.7, 8.0, 4.1, 2.9  // 2020-2024
         ];
 
+        // US Population data (in millions) - Annual data 1970-2024
+        // Source: US Census Bureau, World Bank
+        const population = [
+            205.1, 207.7, 209.9, 211.9, 213.9, 216.0, 218.0, 220.2, 222.6, 225.1,  // 1970-1979
+            227.2, 229.5, 231.7, 233.8, 236.3, 238.5, 240.7, 242.8, 245.0, 247.3,  // 1980-1989
+            250.1, 253.5, 256.9, 260.3, 263.4, 266.6, 269.7, 272.9, 276.1, 279.3,  // 1990-1999
+            282.2, 285.1, 288.0, 290.8, 293.7, 296.5, 299.4, 302.0, 304.4, 307.0,  // 2000-2009
+            309.3, 311.6, 313.9, 316.2, 318.6, 320.9, 323.1, 325.1, 327.2, 328.2,  // 2010-2019
+            331.4, 332.0, 333.3, 334.9, 340.0  // 2020-2024
+        ];
+
+        // Convert all data to per capita (divide by population in millions, multiply by 1000000 to get thousands per person)
+        const dataPerCapita = {
+            stocks: data.stocks.map((val, i) => (val * 1000000) / population[i]),
+            bonds: data.bonds.map((val, i) => (val * 1000000) / population[i]),
+            housing: data.housing.map((val, i) => (val * 1000000) / population[i]),
+            privateCompanies: data.privateCompanies.map((val, i) => (val * 1000000) / population[i]),
+            food: data.food.map((val, i) => (val * 1000000) / population[i]),
+            services: data.services.map((val, i) => (val * 1000000) / population[i]),
+            energy: data.energy.map((val, i) => (val * 1000000) / population[i]),
+            automotive: data.automotive.map((val, i) => (val * 1000000) / population[i]),
+            otherGoods: data.otherGoods.map((val, i) => (val * 1000000) / population[i]),
+            m2: data.m2.map((val, i) => (val * 1000000) / population[i]),
+            m0: data.m0.map((val, i) => (val * 1000000) / population[i]),
+            gdp: data.gdp.map((val, i) => (val * 1000000) / population[i])
+        };
+
         // Colors for each category
         const colors = {
             stocks: '#4da6ff',
@@ -729,48 +757,48 @@
             m0: 'rgba(255, 100, 100, 0.5)'
         };
 
-        // Populate the data table
+        // Populate the data table (per capita values in thousands)
         const tableBody = document.getElementById('tableBody');
         years.forEach((year, i) => {
-            const total = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i] +
-                          data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+            const total = dataPerCapita.stocks[i] + dataPerCapita.bonds[i] + dataPerCapita.housing[i] + dataPerCapita.privateCompanies[i] +
+                          dataPerCapita.food[i] + dataPerCapita.services[i] + dataPerCapita.energy[i] + dataPerCapita.automotive[i] + dataPerCapita.otherGoods[i];
 
             const row = document.createElement('tr');
             if (year === '2024') row.classList.add('highlight');
 
             row.innerHTML = `
                 <td>${year}</td>
-                <td>$${data.stocks[i].toFixed(2)}</td>
-                <td>$${data.bonds[i].toFixed(2)}</td>
-                <td>$${data.housing[i].toFixed(2)}</td>
-                <td>$${data.privateCompanies[i].toFixed(2)}</td>
-                <td>$${data.food[i].toFixed(2)}</td>
-                <td>$${data.services[i].toFixed(2)}</td>
-                <td>$${data.energy[i].toFixed(2)}</td>
-                <td>$${data.automotive[i].toFixed(2)}</td>
-                <td>$${data.otherGoods[i].toFixed(2)}</td>
-                <td>$${data.m2[i].toFixed(2)}</td>
-                <td>$${data.m0[i].toFixed(2)}</td>
-                <td class="highlight">$${total.toFixed(2)}</td>
+                <td>$${dataPerCapita.stocks[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.bonds[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.housing[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.privateCompanies[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.food[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.services[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.energy[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.automotive[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.otherGoods[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.m2[i].toFixed(0).toLocaleString()}</td>
+                <td>$${dataPerCapita.m0[i].toFixed(0).toLocaleString()}</td>
+                <td class="highlight">$${total.toFixed(0).toLocaleString()}</td>
             `;
             tableBody.appendChild(row);
         });
 
-        // Add totals row for 2024
+        // Add totals row for 2024 (per capita)
         const lastIdx = years.length - 1;
         const totalsRow = document.createElement('tr');
         totalsRow.classList.add('totals-row');
-        const total2024 = data.stocks[lastIdx] + data.bonds[lastIdx] + data.housing[lastIdx] + data.privateCompanies[lastIdx] +
-                          data.food[lastIdx] + data.services[lastIdx] + data.energy[lastIdx] + data.automotive[lastIdx] + data.otherGoods[lastIdx];
-        const assets2024 = data.stocks[lastIdx] + data.bonds[lastIdx] + data.housing[lastIdx] + data.privateCompanies[lastIdx];
-        const consumer2024 = data.food[lastIdx] + data.services[lastIdx] + data.energy[lastIdx] + data.automotive[lastIdx] + data.otherGoods[lastIdx];
+        const total2024 = dataPerCapita.stocks[lastIdx] + dataPerCapita.bonds[lastIdx] + dataPerCapita.housing[lastIdx] + dataPerCapita.privateCompanies[lastIdx] +
+                          dataPerCapita.food[lastIdx] + dataPerCapita.services[lastIdx] + dataPerCapita.energy[lastIdx] + dataPerCapita.automotive[lastIdx] + dataPerCapita.otherGoods[lastIdx];
+        const assets2024 = dataPerCapita.stocks[lastIdx] + dataPerCapita.bonds[lastIdx] + dataPerCapita.housing[lastIdx] + dataPerCapita.privateCompanies[lastIdx];
+        const consumer2024 = dataPerCapita.food[lastIdx] + dataPerCapita.services[lastIdx] + dataPerCapita.energy[lastIdx] + dataPerCapita.automotive[lastIdx] + dataPerCapita.otherGoods[lastIdx];
 
         totalsRow.innerHTML = `
             <td>2024 Summary</td>
-            <td colspan="4" style="text-align:center;">Assets: $${assets2024.toFixed(1)}T</td>
-            <td colspan="5" style="text-align:center;">Consumer: $${consumer2024.toFixed(1)}T/yr</td>
-            <td>$${data.m2[lastIdx].toFixed(1)}T</td>
-            <td>$${total2024.toFixed(1)}T</td>
+            <td colspan="4" style="text-align:center;">Assets: $${assets2024.toFixed(0).toLocaleString()} per capita</td>
+            <td colspan="5" style="text-align:center;">Consumer: $${consumer2024.toFixed(0).toLocaleString()} per capita/yr</td>
+            <td>$${dataPerCapita.m2[lastIdx].toFixed(0).toLocaleString()}</td>
+            <td>$${total2024.toFixed(0).toLocaleString()}</td>
         `;
         tableBody.appendChild(totalsRow);
 
@@ -778,14 +806,14 @@
         // CUMULATIVE GROWTH CALCULATION (Direct from Market Values)
         // ============================================
 
-        // Calculate cumulative growth indexed to 1970 = 100
+        // Calculate cumulative growth indexed to 1970 = 100 (using per capita values)
         function calculateCumulativeGrowth() {
-            // Base year values (1970)
-            const baseAssets = data.stocks[0] + data.bonds[0] + data.housing[0] + data.privateCompanies[0];
-            const baseConsumer = data.food[0] + data.services[0] + data.energy[0] + data.automotive[0] + data.otherGoods[0];
-            const baseM2 = data.m2[0];
-            const baseM0 = data.m0[0];
-            const baseGDP = data.gdp[0];
+            // Base year values (1970) - per capita
+            const baseAssets = dataPerCapita.stocks[0] + dataPerCapita.bonds[0] + dataPerCapita.housing[0] + dataPerCapita.privateCompanies[0];
+            const baseConsumer = dataPerCapita.food[0] + dataPerCapita.services[0] + dataPerCapita.energy[0] + dataPerCapita.automotive[0] + dataPerCapita.otherGoods[0];
+            const baseM2 = dataPerCapita.m2[0];
+            const baseM0 = dataPerCapita.m0[0];
+            const baseGDP = dataPerCapita.gdp[0];
 
             // Calculate cumulative CPI (compound from annual rates)
             const cumulativeCPI = [100];
@@ -793,44 +821,44 @@
                 cumulativeCPI.push(cumulativeCPI[i-1] * (1 + officialCPIAnnual[i] / 100));
             }
 
-            // Calculate cumulative asset growth (directly from values)
+            // Calculate cumulative asset growth (per capita)
             const cumulativeAssets = [];
             for (let i = 0; i < years.length; i++) {
-                const totalAssets = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i];
+                const totalAssets = dataPerCapita.stocks[i] + dataPerCapita.bonds[i] + dataPerCapita.housing[i] + dataPerCapita.privateCompanies[i];
                 cumulativeAssets.push((totalAssets / baseAssets) * 100);
             }
 
-            // Calculate cumulative consumer spending growth (directly from values)
+            // Calculate cumulative consumer spending growth (per capita)
             const cumulativeConsumer = [];
             for (let i = 0; i < years.length; i++) {
-                const totalConsumer = data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+                const totalConsumer = dataPerCapita.food[i] + dataPerCapita.services[i] + dataPerCapita.energy[i] + dataPerCapita.automotive[i] + dataPerCapita.otherGoods[i];
                 cumulativeConsumer.push((totalConsumer / baseConsumer) * 100);
             }
 
-            // Calculate cumulative M2 growth (directly from values)
+            // Calculate cumulative M2 growth (per capita)
             const cumulativeM2 = [];
             for (let i = 0; i < years.length; i++) {
-                cumulativeM2.push((data.m2[i] / baseM2) * 100);
+                cumulativeM2.push((dataPerCapita.m2[i] / baseM2) * 100);
             }
 
-            // Calculate cumulative M0 growth (directly from values)
+            // Calculate cumulative M0 growth (per capita)
             const cumulativeM0 = [];
             for (let i = 0; i < years.length; i++) {
-                cumulativeM0.push((data.m0[i] / baseM0) * 100);
+                cumulativeM0.push((dataPerCapita.m0[i] / baseM0) * 100);
             }
 
-            // Calculate cumulative GDP growth (directly from values)
+            // Calculate cumulative GDP growth (per capita)
             const cumulativeGDP = [];
             for (let i = 0; i < years.length; i++) {
-                cumulativeGDP.push((data.gdp[i] / baseGDP) * 100);
+                cumulativeGDP.push((dataPerCapita.gdp[i] / baseGDP) * 100);
             }
 
-            // Calculate blended "true inflation" - weighted by relative size each year
+            // Calculate blended "true inflation" - weighted by relative size each year (per capita)
             // Weight assets and consumer spending by their dollar values
             const cumulativeBlended = [];
             for (let i = 0; i < years.length; i++) {
-                const totalAssets = data.stocks[i] + data.bonds[i] + data.housing[i] + data.privateCompanies[i];
-                const totalConsumer = data.food[i] + data.services[i] + data.energy[i] + data.automotive[i] + data.otherGoods[i];
+                const totalAssets = dataPerCapita.stocks[i] + dataPerCapita.bonds[i] + dataPerCapita.housing[i] + dataPerCapita.privateCompanies[i];
+                const totalConsumer = dataPerCapita.food[i] + dataPerCapita.services[i] + dataPerCapita.energy[i] + dataPerCapita.automotive[i] + dataPerCapita.otherGoods[i];
                 const totalValue = totalAssets + totalConsumer;
 
                 // Weight by current year proportions
@@ -1175,6 +1203,9 @@
             ]
         };
 
+        // Convert wealth to per capita (thousands per person)
+        const totalWealthPerCapita = totalWealth.map((val, i) => (val * 1000000) / population[i]);
+
         // Create wealth distribution stacked bar chart
         const wealthCtx = document.getElementById('wealthDistributionChart').getContext('2d');
         new Chart(wealthCtx, {
@@ -1243,9 +1274,9 @@
                             label: function(context) {
                                 const idx = context.dataIndex;
                                 const pct = context.raw;
-                                const total = totalWealth[idx];
-                                const amount = (pct / 100 * total).toFixed(1);
-                                return context.dataset.label + ': ' + pct.toFixed(1) + '% ($' + amount + 'T)';
+                                const total = totalWealthPerCapita[idx];
+                                const amount = (pct / 100 * total).toFixed(0);
+                                return context.dataset.label + ': ' + pct.toFixed(1) + '% ($' + amount.toLocaleString() + ' per capita)';
                             }
                         }
                     }
@@ -1282,7 +1313,7 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${year}</td>
-                    <td>$${totalWealth[i].toFixed(1)}T</td>
+                    <td>$${totalWealthPerCapita[i].toFixed(0).toLocaleString()} per capita</td>
                     <td style="color: #e94560;">${wealthDistribution.bottom50[i].toFixed(1)}%</td>
                     <td style="color: #ff8c00;">${wealthDistribution.next40[i].toFixed(1)}%</td>
                     <td style="color: #FFD700;">${wealthDistribution.next9[i].toFixed(1)}%</td>
