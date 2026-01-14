@@ -1230,21 +1230,26 @@
                 const next9Ratio = (wealthDistribution.next9[54] / wealthDistribution.next9[0]).toFixed(2);
                 const top09Ratio = (wealthDistribution.top09[54] / wealthDistribution.top09[0]).toFixed(2);
                 const top01Ratio = (wealthDistribution.top01[54] / wealthDistribution.top01[0]).toFixed(2);
+                const foreignRatio = (wealthDistribution.foreign[54] / wealthDistribution.foreign[0]).toFixed(2);
+                const govRatio = (wealthDistribution.government[54] / wealthDistribution.government[0]).toFixed(2);
 
                 const lastIndex = years.length - 1;
-                const x = chartArea.right + 18;
+                const x = chartArea.right + 20;
 
-                ctx.font = 'bold 18px Arial';
+                ctx.font = 'bold 16px Arial';
                 ctx.textAlign = 'left';
 
                 // Calculate cumulative percentages to find positions for each segment
+                // Order matches the stacking order in the chart (bottom to top)
                 let cumulative = 0;
                 const segments = [
                     { label: bottom50Ratio + 'x', pct: wealthDistribution.bottom50[54], color: '#e94560' },
                     { label: next40Ratio + 'x', pct: wealthDistribution.next40[54], color: '#ff8c00' },
                     { label: next9Ratio + 'x', pct: wealthDistribution.next9[54], color: '#FFD700' },
                     { label: top09Ratio + 'x', pct: wealthDistribution.top09[54], color: '#4CAF50' },
-                    { label: top01Ratio + 'x', pct: wealthDistribution.top01[54], color: '#4da6ff' }
+                    { label: top01Ratio + 'x', pct: wealthDistribution.top01[54], color: '#4da6ff' },
+                    { label: foreignRatio + 'x', pct: wealthDistribution.foreign[54], color: '#9b59b6' },
+                    { label: govRatio + 'x', pct: wealthDistribution.government[54], color: '#00bcd4' }
                 ];
 
                 segments.forEach(segment => {
@@ -1253,19 +1258,22 @@
                     const yCenter = (yTop + yBottom) / 2;
                     cumulative += segment.pct;
 
-                    // Draw bracket
-                    ctx.strokeStyle = segment.color;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(chartArea.right + 5, yTop);
-                    ctx.lineTo(chartArea.right + 12, yTop);
-                    ctx.lineTo(chartArea.right + 12, yBottom);
-                    ctx.lineTo(chartArea.right + 5, yBottom);
-                    ctx.stroke();
+                    // Only draw bracket and label if segment is large enough (> 2%)
+                    if (segment.pct > 2) {
+                        // Draw bracket matching segment color
+                        ctx.strokeStyle = segment.color;
+                        ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        ctx.moveTo(chartArea.right + 5, yTop);
+                        ctx.lineTo(chartArea.right + 14, yTop);
+                        ctx.lineTo(chartArea.right + 14, yBottom);
+                        ctx.lineTo(chartArea.right + 5, yBottom);
+                        ctx.stroke();
 
-                    // Draw label
-                    ctx.fillStyle = segment.color;
-                    ctx.fillText(segment.label, x, yCenter + 6);
+                        // Draw label matching segment color
+                        ctx.fillStyle = segment.color;
+                        ctx.fillText(segment.label, x, yCenter + 5);
+                    }
                 });
             }
         };
@@ -1366,7 +1374,7 @@
                 },
                 layout: {
                     padding: {
-                        right: 60  // Add space on right for labels
+                        right: 80  // Add space on right for labels
                     }
                 }
             },
