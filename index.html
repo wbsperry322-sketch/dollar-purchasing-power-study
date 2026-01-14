@@ -1224,39 +1224,48 @@
                 const xScale = scales.x;
                 const yScale = scales.y;
 
-                // Calculate growth multiples for each group
-                const bottom50Growth = ((totalWealth[54] * wealthDistribution.bottom50[54] / 100) / (totalWealth[0] * wealthDistribution.bottom50[0] / 100)).toFixed(0);
-                const next40Growth = ((totalWealth[54] * wealthDistribution.next40[54] / 100) / (totalWealth[0] * wealthDistribution.next40[0] / 100)).toFixed(0);
-                const next9Growth = ((totalWealth[54] * wealthDistribution.next9[54] / 100) / (totalWealth[0] * wealthDistribution.next9[0] / 100)).toFixed(0);
-                const top09Growth = ((totalWealth[54] * wealthDistribution.top09[54] / 100) / (totalWealth[0] * wealthDistribution.top09[0] / 100)).toFixed(0);
-                const top01Growth = ((totalWealth[54] * wealthDistribution.top01[54] / 100) / (totalWealth[0] * wealthDistribution.top01[0] / 100)).toFixed(0);
+                // Calculate share change ratios (ending % / starting %)
+                const bottom50Ratio = (wealthDistribution.bottom50[54] / wealthDistribution.bottom50[0]).toFixed(2);
+                const next40Ratio = (wealthDistribution.next40[54] / wealthDistribution.next40[0]).toFixed(2);
+                const next9Ratio = (wealthDistribution.next9[54] / wealthDistribution.next9[0]).toFixed(2);
+                const top09Ratio = (wealthDistribution.top09[54] / wealthDistribution.top09[0]).toFixed(2);
+                const top01Ratio = (wealthDistribution.top01[54] / wealthDistribution.top01[0]).toFixed(2);
 
                 const lastIndex = years.length - 1;
-                const x = chartArea.right + 10;
+                const x = chartArea.right + 18;
 
-                ctx.font = 'bold 16px Arial';
+                ctx.font = 'bold 18px Arial';
                 ctx.textAlign = 'left';
 
-                // Get y positions for each segment at the last bar
-                const meta = chart.getDatasetMeta(0);
-                const lastBar = meta.data[lastIndex];
-
-                // Calculate cumulative percentages to find center of each segment
+                // Calculate cumulative percentages to find positions for each segment
                 let cumulative = 0;
                 const segments = [
-                    { label: bottom50Growth + 'x', pct: wealthDistribution.bottom50[54], color: '#e94560' },
-                    { label: next40Growth + 'x', pct: wealthDistribution.next40[54], color: '#ff8c00' },
-                    { label: next9Growth + 'x', pct: wealthDistribution.next9[54], color: '#FFD700' },
-                    { label: top09Growth + 'x', pct: wealthDistribution.top09[54], color: '#4CAF50' },
-                    { label: top01Growth + 'x', pct: wealthDistribution.top01[54], color: '#4da6ff' }
+                    { label: bottom50Ratio + 'x', pct: wealthDistribution.bottom50[54], color: '#e94560' },
+                    { label: next40Ratio + 'x', pct: wealthDistribution.next40[54], color: '#ff8c00' },
+                    { label: next9Ratio + 'x', pct: wealthDistribution.next9[54], color: '#FFD700' },
+                    { label: top09Ratio + 'x', pct: wealthDistribution.top09[54], color: '#4CAF50' },
+                    { label: top01Ratio + 'x', pct: wealthDistribution.top01[54], color: '#4da6ff' }
                 ];
 
                 segments.forEach(segment => {
-                    const yPos = yScale.getPixelForValue(100 - cumulative - segment.pct / 2);
+                    const yTop = yScale.getPixelForValue(100 - cumulative);
+                    const yBottom = yScale.getPixelForValue(100 - cumulative - segment.pct);
+                    const yCenter = (yTop + yBottom) / 2;
                     cumulative += segment.pct;
 
+                    // Draw bracket
+                    ctx.strokeStyle = segment.color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(chartArea.right + 5, yTop);
+                    ctx.lineTo(chartArea.right + 12, yTop);
+                    ctx.lineTo(chartArea.right + 12, yBottom);
+                    ctx.lineTo(chartArea.right + 5, yBottom);
+                    ctx.stroke();
+
+                    // Draw label
                     ctx.fillStyle = segment.color;
-                    ctx.fillText(segment.label, x, yPos + 5);
+                    ctx.fillText(segment.label, x, yCenter + 6);
                 });
             }
         };
