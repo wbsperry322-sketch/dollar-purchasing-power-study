@@ -400,6 +400,44 @@
                 <canvas id="wealthDistributionChart"></canvas>
             </div>
 
+            <!-- Wealth Growth Summary -->
+            <div style="margin-top: 20px; padding: 20px; background: rgba(233, 69, 96, 0.1); border-left: 4px solid #e94560; border-radius: 5px;">
+                <h3 style="margin-top: 0; color: #e94560;">Absolute Wealth Growth by Group (1970-2024)</h3>
+                <p style="color: #a8a8a8; font-size: 0.9rem; margin-bottom: 15px;">
+                    While total wealth grew ~51x, different groups captured vastly different amounts:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                    <div style="background: rgba(233, 69, 96, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.85rem; color: #e94560; margin-bottom: 5px;">Bottom 50%</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #e94560;">39x</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">Share: 2% → 1.5%</div>
+                    </div>
+                    <div style="background: rgba(255, 140, 0, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.85rem; color: #ff8c00; margin-bottom: 5px;">Next 40%</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #ff8c00;">35x</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">Share: 32% → 22%</div>
+                    </div>
+                    <div style="background: rgba(255, 215, 0, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.85rem; color: #FFD700; margin-bottom: 5px;">Next 9%</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #FFD700;">46x</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">Share: 35% → 31%</div>
+                    </div>
+                    <div style="background: rgba(76, 175, 80, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.85rem; color: #4CAF50; margin-bottom: 5px;">Top 0.9%</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #4CAF50;">69x</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">Share: 15% → 20%</div>
+                    </div>
+                    <div style="background: rgba(77, 166, 255, 0.2); padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.85rem; color: #4da6ff; margin-bottom: 5px;">Top 0.1%</div>
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #4da6ff;">129x</div>
+                        <div style="font-size: 0.75rem; color: #888; margin-top: 5px;">Share: 7% → 17.5%</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #e94560; font-size: 0.9rem; font-weight: bold;">
+                    The top 0.1% captured wealth 129x/39x = 3.3x faster than the bottom 50%. Stock ownership drives this gap.
+                </p>
+            </div>
+
             <div class="legend-note">
                 <h3>Reading This Chart (Saez & Zucman estimates)</h3>
                 <p><strong>Bottom 50%:</strong> The lower half of US households by wealth. Their share collapsed from ~2% to near zero or negative (2008 crisis = underwater mortgages), recovering slightly to ~1.5%.</p>
