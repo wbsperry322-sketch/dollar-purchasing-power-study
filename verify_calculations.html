@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Per Capita Calculations</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #e8e8e8; }
+        .result { margin: 10px 0; padding: 10px; background: #2a2a2a; }
+        .error { color: #ff6464; }
+        .success { color: #4CAF50; }
+    </style>
+</head>
+<body>
+    <h1>Per Capita Growth Verification</h1>
+    <div id="results"></div>
+
+    <script>
+        const population = {
+            1970: 205.1,
+            2024: 340.0
+        };
+
+        const gdp = {
+            1970: 1.07,  // trillion
+            2024: 29.00  // trillion
+        };
+
+        const assets = {
+            stocks: { 1970: 0.80, 2024: 55.00 },
+            bonds: { 1970: 0.20, 2024: 22.00 },
+            housing: { 1970: 1.00, 2024: 50.00 },
+            privateCompanies: { 1970: 0.30, 2024: 20.00 }
+        };
+
+        // Calculate per capita values
+        const gdpPerCapita1970 = (gdp[1970] * 1000000) / population[1970];
+        const gdpPerCapita2024 = (gdp[2024] * 1000000) / population[2024];
+        const gdpGrowth = gdpPerCapita2024 / gdpPerCapita1970;
+
+        const totalAssets1970 = assets.stocks[1970] + assets.bonds[1970] + assets.housing[1970] + assets.privateCompanies[1970];
+        const totalAssets2024 = assets.stocks[2024] + assets.bonds[2024] + assets.housing[2024] + assets.privateCompanies[2024];
+
+        const assetsPerCapita1970 = (totalAssets1970 * 1000000) / population[1970];
+        const assetsPerCapita2024 = (totalAssets2024 * 1000000) / population[2024];
+        const assetsGrowth = assetsPerCapita2024 / assetsPerCapita1970;
+
+        const ratio = assetsGrowth / gdpGrowth;
+
+        // Display results
+        const results = document.getElementById('results');
+        results.innerHTML = `
+            <div class="result">
+                <h2>GDP Per Capita</h2>
+                <p>1970: $${gdpPerCapita1970.toFixed(2).toLocaleString()}</p>
+                <p>2024: $${gdpPerCapita2024.toFixed(2).toLocaleString()}</p>
+                <p class="success">Growth: ${gdpGrowth.toFixed(2)}x (${((gdpGrowth - 1) * 100).toFixed(1)}%)</p>
+            </div>
+
+            <div class="result">
+                <h2>Total Assets Per Capita</h2>
+                <p>1970: $${assetsPerCapita1970.toFixed(2).toLocaleString()}</p>
+                <p>2024: $${assetsPerCapita2024.toFixed(2).toLocaleString()}</p>
+                <p class="success">Growth: ${assetsGrowth.toFixed(2)}x (${((assetsGrowth - 1) * 100).toFixed(1)}%)</p>
+            </div>
+
+            <div class="result">
+                <h2>Assets vs GDP Growth Ratio</h2>
+                <p class="${ratio > 1 ? 'success' : 'error'}">
+                    Assets grew ${ratio.toFixed(2)}x ${ratio > 1 ? 'FASTER' : 'SLOWER'} than GDP per capita
+                </p>
+                <p>Assets: ${assetsGrowth.toFixed(2)}x / GDP: ${gdpGrowth.toFixed(2)}x = ${ratio.toFixed(2)}x</p>
+            </div>
+
+            <div class="result error">
+                <h2>Current Site Claims (WRONG)</h2>
+                <p>❌ GDP per capita grew ~5.2x (actually ${gdpGrowth.toFixed(1)}x)</p>
+                <p>❌ Assets per capita grew ~4.7x (actually ${assetsGrowth.toFixed(1)}x)</p>
+                <p>❌ Assets grew SLOWER (actually ${ratio.toFixed(1)}x FASTER)</p>
+            </div>
+
+            <div class="result success">
+                <h2>Correct Narrative</h2>
+                <p>✓ GDP per capita grew ${gdpGrowth.toFixed(1)}x (from $${(gdpPerCapita1970/1000).toFixed(1)}k to $${(gdpPerCapita2024/1000).toFixed(1)}k)</p>
+                <p>✓ Assets per capita grew ${assetsGrowth.toFixed(1)}x (from $${(assetsPerCapita1970/1000).toFixed(1)}k to $${(assetsPerCapita2024/1000).toFixed(1)}k)</p>
+                <p>✓ Assets grew ${ratio.toFixed(1)}x FASTER than GDP per capita</p>
+                <p>✓ Individual wealth DID grow dramatically - asset wealth per person increased ${assetsGrowth.toFixed(1)}x</p>
+                <p>✓ But this wealth is increasingly concentrated in the top 1%</p>
+            </div>
+        `;
+    </script>
+</body>
+</html>
