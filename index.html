@@ -1334,10 +1334,10 @@
         });
 
         // Add summary row showing change from 1970 to 2024
-        const summaryRow = document.createElement('tr');
-        summaryRow.style.background = 'rgba(233, 69, 96, 0.1)';
-        summaryRow.style.fontWeight = 'bold';
-        summaryRow.style.borderTop = '2px solid #e94560';
+        const wealthSummaryRow = document.createElement('tr');
+        wealthSummaryRow.style.background = 'rgba(233, 69, 96, 0.1)';
+        wealthSummaryRow.style.fontWeight = 'bold';
+        wealthSummaryRow.style.borderTop = '2px solid #e94560';
 
         const change_bottom50 = wealthDistribution.bottom50[54] - wealthDistribution.bottom50[0];
         const change_next40 = wealthDistribution.next40[54] - wealthDistribution.next40[0];
@@ -1347,7 +1347,7 @@
         const change_foreign = wealthDistribution.foreign[54] - wealthDistribution.foreign[0];
         const change_government = wealthDistribution.government[54] - wealthDistribution.government[0];
 
-        summaryRow.innerHTML = `
+        wealthSummaryRow.innerHTML = `
             <td>Change (1970→2024)</td>
             <td></td>
             <td style="color: ${change_bottom50 >= 0 ? '#4CAF50' : '#e94560'};">${change_bottom50 > 0 ? '+' : ''}${change_bottom50.toFixed(1)}%</td>
@@ -1358,7 +1358,7 @@
             <td style="color: ${change_foreign >= 0 ? '#4CAF50' : '#e94560'};">${change_foreign > 0 ? '+' : ''}${change_foreign.toFixed(1)}%</td>
             <td style="color: ${change_government >= 0 ? '#4CAF50' : '#e94560'};">${change_government > 0 ? '+' : ''}${change_government.toFixed(1)}%</td>
         `;
-        wealthTableBody.appendChild(summaryRow);
+        wealthTableBody.appendChild(wealthSummaryRow);
 
         // ============================================
         // ASSET COMPOSITION BY WEALTH GROUP CHART
