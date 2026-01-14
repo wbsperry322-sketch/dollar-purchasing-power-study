@@ -1240,7 +1240,7 @@
                 ctx.textAlign = 'left';
 
                 // Calculate cumulative percentages to find positions for each segment
-                // Order matches the stacking order in the chart (bottom to top)
+                // Chart stacks from bottom to top, so we start at 0 and add up
                 let cumulative = 0;
                 const segments = [
                     { label: bottom50Ratio + 'x', pct: wealthDistribution.bottom50[54], color: '#e94560' },
@@ -1253,21 +1253,22 @@
                 ];
 
                 segments.forEach(segment => {
-                    const yTop = yScale.getPixelForValue(100 - cumulative);
-                    const yBottom = yScale.getPixelForValue(100 - cumulative - segment.pct);
+                    // Y positions: bottom of segment to top of segment
+                    const yBottom = yScale.getPixelForValue(cumulative);
+                    const yTop = yScale.getPixelForValue(cumulative + segment.pct);
                     const yCenter = (yTop + yBottom) / 2;
                     cumulative += segment.pct;
 
-                    // Only draw bracket and label if segment is large enough (> 2%)
-                    if (segment.pct > 2) {
+                    // Draw all segments with visible size
+                    if (segment.pct > 1) {
                         // Draw bracket matching segment color
                         ctx.strokeStyle = segment.color;
                         ctx.lineWidth = 2.5;
                         ctx.beginPath();
-                        ctx.moveTo(chartArea.right + 5, yTop);
-                        ctx.lineTo(chartArea.right + 14, yTop);
+                        ctx.moveTo(chartArea.right + 5, yBottom);
                         ctx.lineTo(chartArea.right + 14, yBottom);
-                        ctx.lineTo(chartArea.right + 5, yBottom);
+                        ctx.lineTo(chartArea.right + 14, yTop);
+                        ctx.lineTo(chartArea.right + 5, yTop);
                         ctx.stroke();
 
                         // Draw label matching segment color
