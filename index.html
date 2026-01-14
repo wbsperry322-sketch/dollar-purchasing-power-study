@@ -1014,13 +1014,13 @@
         });
 
         // Add summary row
-        const summaryRow = document.createElement('tr');
-        summaryRow.classList.add('totals-row');
+        const inflationSummaryRow = document.createElement('tr');
+        inflationSummaryRow.classList.add('totals-row');
         const finalCPI = cumulativeCPI[cumulativeCPI.length - 1];
         const finalM2 = cumulativeM2[cumulativeM2.length - 1];
         const finalM0 = cumulativeM0[cumulativeM0.length - 1];
         const finalAssets = cumulativeAssets[cumulativeAssets.length - 1];
-        summaryRow.innerHTML = `
+        inflationSummaryRow.innerHTML = `
             <td><strong>1970-2024 Total</strong></td>
             <td style="color: #4CAF50;"><strong>${(finalCPI - 100).toFixed(0)}% (${(finalCPI/100).toFixed(0)}x)</strong></td>
             <td style="color: #FFD700;"><strong>${(finalM2 - 100).toFixed(0)}% (${(finalM2/100).toFixed(0)}x)</strong></td>
@@ -1029,7 +1029,7 @@
             <td><strong>${(finalAssets / finalCPI).toFixed(1)}x more</strong></td>
             <td><strong>${(finalAssets / finalM0).toFixed(1)}x more</strong></td>
         `;
-        inflationTableBody.appendChild(summaryRow);
+        inflationTableBody.appendChild(inflationSummaryRow);
 
         // ============================================
         // EXPECTED VS ACTUAL ASSET GROWTH CHART
