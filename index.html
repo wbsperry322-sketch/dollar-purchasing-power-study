@@ -743,6 +743,12 @@
             gdp: data.gdp
         };
 
+        // Debug: Log initial values
+        console.log('GDP 1970:', dataPerCapita.gdp[0], 'GDP 2024:', dataPerCapita.gdp[54]);
+        console.log('Stocks 1970:', dataPerCapita.stocks[0], 'Stocks 2024:', dataPerCapita.stocks[54]);
+        console.log('Total assets 1970:', dataPerCapita.stocks[0] + dataPerCapita.bonds[0] + dataPerCapita.housing[0] + dataPerCapita.privateCompanies[0]);
+        console.log('Total assets 2024:', dataPerCapita.stocks[54] + dataPerCapita.bonds[54] + dataPerCapita.housing[54] + dataPerCapita.privateCompanies[54]);
+
         // Colors for each category
         const colors = {
             stocks: '#4da6ff',
